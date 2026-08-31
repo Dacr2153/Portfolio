@@ -1,0 +1,261 @@
+/* === LIGHT THEME === */
+html.light {
+  --bg-terminal:     #f8f9fa;
+  --bg-titlebar:     #e9ecef;
+  --bg-tabbar:       #e2e6ea;
+  --bg-tab-active:   #f8f9fa;
+  --bg-selection:    rgba(97, 175, 239, 0.2);
+  --bg-hover:        rgba(97, 175, 239, 0.08);
+  --bg-modal:        rgba(248, 249, 250, 0.95);
+
+  --text-primary:    #1e2530;
+  --text-secondary:  #4a5568;
+  --text-muted:      #718096;
+
+  --term-green:      #1a7a3e;
+  --term-cyan:       #0e6b7a;
+  --term-yellow:     #a06b00;
+  --term-red:        #b33030;
+  --term-blue:       #1a5f99;
+  --term-magenta:    #7b349e;
+  --term-white:      #2d3748;
+  --term-orange:     #c05621;
+
+  --accent-cyber:    #1a7a3e;
+  --accent-ai:       #7b349e;
+  --accent-web:      #1a5f99;
+
+  --border-terminal: #cbd5e0;
+  --border-tab:      #d2d8e0;
+  --border-focus:    #a0aec0;
+
+  --shadow-window:   0 10px 40px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+html.light body {
+  background: #d1d5db;
+}
+
+html.light .dot--red    { background: #e74c3c; }
+html.light .dot--yellow { background: #f39c12; }
+html.light .dot--green  { background: #27ae60; }
+
+html.light .project-detail {
+  background: rgba(233, 236, 239, 0.5);
+}
+
+html.light .terminal__body::before {
+  display: none;
+}
+
+html.light .contact-form {
+  background: transparent;
+}
+
+html.light .cursor {
+  background: var(--term-green);
+}
+
+/* === TERMINAL EMULATOR — LIGHT === */
+html.light .term-emulator {
+  background: #ffffff;
+  border-color: #cbd5e0;
+}
+
+html.light .term-emulator::before {
+  display: none;
+}
+
+html.light .term-emulator__output {
+  color: #1e2530;
+}
+
+html.light .term-emulator__input-line {
+  background: #f7f8fa;
+  border-color: #cbd5e0;
+}
+
+html.light .term-emulator__input {
+  color: #1e2530;
+}
+
+/* Output lines — light */
+html.light .term-emulator__line {
+  color: #2d3748;
+}
+
+html.light .term-emulator__line.input-echo {
+  color: #4a5568;
+}
+
+html.light .term-emulator__line.dim {
+  color: #718096;
+}
+
+html.light .term-emulator__line.error {
+  color: #c53030;
+}
+
+html.light .term-emulator__line.help-header,
+html.light .term-emulator__line.highlight {
+  color: #975a16;
+}
+
+html.light .term-emulator__line.cyan {
+  color: #0e6b7a;
+}
+
+html.light .term-emulator__line.green {
+  color: #1a7a3e;
+}
+
+html.light .term-emulator__line.yellow {
+  color: #975a16;
+}
+
+html.light .term-emulator__line.project-title {
+  color: #1a7a3e;
+}
+
+/* Span colors — light */
+html.light .term-emulator__line .term-cmd {
+  color: #0e6b7a;
+}
+
+html.light .term-emulator__line .term-desc {
+  color: #4a5568;
+}
+
+html.light .term-emulator__line .term-dir-cyber {
+  color: #1a7a3e;
+}
+
+html.light .term-emulator__line .term-dir-ai {
+  color: #7b349e;
+}
+
+html.light .term-emulator__line .term-dir-web {
+  color: #1a5f99;
+}
+
+html.light .term-emulator__line .term-file {
+  color: #0e6b7a;
+}
+
+html.light .term-emulator__line .term-dim {
+  color: #718096;
+}
+
+html.light .term-emulator__line .term-tech,
+html.light .term-emulator__line .term-tech-item {
+  color: #0e6b7a;
+  border-color: #cbd5e0;
+}
+
+html.light .term-emulator__line .term-metric-label {
+  color: #4a5568;
+}
+
+html.light .term-emulator__line .term-metric-value {
+  color: #1a7a3e;
+}
+
+html.light .term-emulator__line .term-skill-name {
+  color: #1e2530;
+}
+
+html.light .term-emulator__line .term-pct {
+  color: #718096;
+}
+
+html.light .term-emulator__line .term-link {
+  color: #0e6b7a;
+  text-decoration-color: rgba(14, 107, 122, 0.3);
+}
+
+/* Skill bars — light */
+html.light .term-bar-green   { color: #1a7a3e; }
+html.light .term-bar-magenta { color: #7b349e; }
+html.light .term-bar-blue    { color: #1a5f99; }
+html.light .term-bar-cyan    { color: #0e6b7a; }
+html.light .term-bar-yellow  { color: #975a16; }
+
+/* Cursor — light */
+html.light .term-emulator__cursor {
+  background: #1a7a3e;
+  box-shadow: 0 0 4px rgba(26, 122, 62, 0.3);
+}
+
+/* Tabs — light */
+html.light .tab {
+  color: #4a5568;
+  border-color: #d2d8e0;
+}
+
+html.light .tab:hover {
+  color: #1e2530;
+  background: rgba(97, 175, 239, 0.08);
+}
+
+html.light .tab--active {
+  color: #1a7a3e;
+  background: #f8f9fa;
+}
+
+html.light .tab--active::after {
+  background: #1a7a3e;
+}
+
+/* Prompt — light */
+html.light .prompt {
+  color: #1a7a3e;
+}
+
+/* Section headers — light */
+html.light .section-header__title {
+  color: #975a16;
+}
+
+/* Metric cards — light */
+html.light .metric-card {
+  background: #ffffff;
+  border-color: #cbd5e0;
+}
+
+html.light .metric-card__value {
+  color: #1a7a3e;
+}
+
+/* Contact channels — light */
+html.light .contact-channel {
+  border-color: #cbd5e0;
+}
+
+html.light .contact-channel:hover {
+  border-color: #1a7a3e;
+}
+
+/* Filter buttons — light */
+html.light .filter-btn {
+  color: #4a5568;
+  border-color: #cbd5e0;
+}
+
+html.light .filter-btn--active {
+  color: #1a7a3e;
+  border-color: #1a7a3e;
+}
+
+/* Project entries — light */
+html.light .project-entry:hover {
+  background: rgba(26, 122, 62, 0.06);
+}
+
+html.light .project-entry__arrow {
+  color: #718096;
+}
+
+/* Neofetch ASCII — light */
+html.light .neofetch__ascii {
+  color: #1a7a3e;
+}

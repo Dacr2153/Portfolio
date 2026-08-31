@@ -1,0 +1,228 @@
+/* === TERMINAL EMULATOR === */
+.term-emulator {
+  margin-top: var(--sp-5);
+  border: 1px solid var(--border-terminal);
+  border-radius: var(--radius-sm);
+  background: rgba(10, 14, 20, 0.7);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 200px;
+  max-height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.term-emulator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.02) 2px,
+    rgba(0, 0, 0, 0.02) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.term-emulator__output {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--sp-3);
+  padding-bottom: 0;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+.term-emulator__input-line {
+  display: flex;
+  align-items: center;
+  padding: var(--sp-2) var(--sp-3);
+  border-top: 1px solid var(--border-terminal);
+  background: rgba(20, 25, 33, 0.6);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.term-emulator__prompt {
+  color: var(--term-green);
+  font-weight: bold;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.term-emulator__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  caret-color: transparent;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.term-emulator__input-line .cursor {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* === OUTPUT LINE STYLES === */
+.term-emulator__line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.term-emulator__line.input-echo {
+  color: var(--text-secondary);
+}
+
+.term-emulator__line.dim {
+  color: var(--text-muted);
+}
+
+.term-emulator__line.error {
+  color: var(--term-red);
+}
+
+.term-emulator__line.help-header {
+  color: var(--term-yellow);
+  font-weight: bold;
+}
+
+.term-emulator__line.highlight {
+  color: var(--term-yellow);
+  font-weight: bold;
+}
+
+.term-emulator__line.cyan {
+  color: var(--term-cyan);
+}
+
+.term-emulator__line.green {
+  color: var(--term-green);
+}
+
+.term-emulator__line.yellow {
+  color: var(--term-yellow);
+}
+
+.term-emulator__line.project-title {
+  color: var(--term-green);
+  font-weight: bold;
+  font-size: var(--text-md);
+}
+
+/* Inline span classes */
+.term-emulator__line .term-cmd {
+  color: var(--term-cyan);
+  font-weight: bold;
+}
+
+.term-emulator__line .term-desc {
+  color: var(--text-secondary);
+}
+
+.term-emulator__line .term-dir-cyber {
+  color: var(--accent-cyber);
+  font-weight: bold;
+}
+
+.term-emulator__line .term-dir-ai {
+  color: var(--accent-ai);
+  font-weight: bold;
+}
+
+.term-emulator__line .term-dir-web {
+  color: var(--accent-web);
+  font-weight: bold;
+}
+
+.term-emulator__line .term-file {
+  color: var(--term-cyan);
+}
+
+.term-emulator__line .term-dim {
+  color: var(--text-muted);
+}
+
+.term-emulator__line .term-tech {
+  color: var(--term-cyan);
+}
+
+.term-emulator__line .term-tech-item {
+  color: var(--term-cyan);
+  border: 1px solid var(--border-terminal);
+  padding: 0 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  margin-right: 4px;
+}
+
+.term-emulator__line .term-metric-label {
+  color: var(--text-secondary);
+}
+
+.term-emulator__line .term-metric-value {
+  color: var(--term-green);
+  font-weight: bold;
+}
+
+.term-emulator__line .term-skill-name {
+  color: var(--text-primary);
+}
+
+.term-emulator__line .term-pct {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.term-emulator__line .term-link {
+  color: var(--term-cyan);
+  text-decoration: underline;
+  text-decoration-color: rgba(108, 180, 201, 0.3);
+}
+
+.term-emulator__line .term-cyan {
+  color: var(--term-cyan);
+}
+
+.term-emulator__line .term-green {
+  color: var(--term-green);
+}
+
+.term-emulator__line .term-yellow {
+  color: var(--term-yellow);
+}
+
+/* Skill bar colors */
+.term-bar-green   { color: var(--accent-cyber); }
+.term-bar-magenta { color: var(--accent-ai); }
+.term-bar-blue    { color: var(--accent-web); }
+.term-bar-cyan    { color: var(--term-cyan); }
+.term-bar-yellow  { color: var(--term-yellow); }
+
+/* === RESPONSIVE === */
+@media (max-width: 767px) {
+  .term-emulator {
+    min-height: 160px;
+    max-height: 300px;
+  }
+
+  .term-emulator__output {
+    font-size: 11px;
+    padding: var(--sp-2);
+  }
+}

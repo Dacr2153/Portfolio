@@ -1,0 +1,269 @@
+{
+  "portfolios": [
+    {
+      "id": "ciberseguridad",
+      "name": "ciberseguridad",
+      "description": "Seguridad ofensiva y defensiva",
+      "color": "cyber",
+      "projects": [
+        {
+          "id": "cloudsentinel",
+          "name": "CloudSentinel_ZeroTrust",
+          "tagline": "SIEM ligero con ML para detección de anomalías en AWS Free Tier",
+          "description": "Sistema de gestión de información y eventos de seguridad (SIEM) diseñado para entornos AWS. Ingesta logs de CloudTrail, los normaliza al Elastic Common Schema (ECS) 8.10+ y aplica detección dual: 8 reglas deterministas mapeadas a MITRE ATT&CK y un modelo Isolation Forest de ML para detección de anomalías (AUC-ROC 0.9992, FPR < 0.6%).\n\nEl sistema opera en dos modos: Local (pipeline completo sin credenciales AWS, procesando exports JSON de CloudTrail) y AWS (Lambda-triggered con S3, SNS, OpenSearch y CloudWatch). Incluye correlación de campañas, alertas SNS con deduplicación SHA-256, e indices OpenSearch de rotación diaria.\n\nArquitectura: CloudTrail → S3 → Lambda Pipeline (Extract → Normalize → Enrich → Feature Engineer → ML Detector + Rule Engine → Alert Manager) → SNS + OpenSearch. Deploy one-click con Bash scripts, 59 tests unitarios con moto, y dashboards CloudWatch de 14 widgets.",
+          "technologies": ["Python", "AWS", "scikit-learn", "CloudFormation", "OpenSearch", "Lambda"],
+          "metrics": [
+            { "label": "MTTD", "value": "<2min" },
+            { "label": "FPR", "value": "<0.6%" },
+            { "label": "AUC-ROC", "value": "0.9992" },
+            { "label": "Tests", "value": "59" }
+          ],
+          "highlights": [
+            "Isolation Forest entrenado con 11k eventos sintéticos, 10 features normalizados",
+            "8 reglas de detección mapeadas a MITRE ATT&CK (T1078, T1098, T1562, T1537, T1550)",
+            "Pipeline completo: CloudTrail → S3 → Lambda → OpenSearch con 8 etapas",
+            "Dashboard OpenSearch con 10 paneles: timeline, heatmap MITRE, scores de anomalía",
+            "Simulación de ataques con Pacu: exfiltración, privilege escalation, credential stuffing",
+            "Configuración 12-Factor con Pydantic v2 BaseSettings y SSM Parameter Store"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/CloudSentinel_ZeroTrust",
+          "video": "assets/videos/cloudsentinel.mp4",
+          "status": "active"
+        },
+        {
+          "id": "dangerzone",
+          "name": "DangerZone",
+          "tagline": "Sanitizador de documentos en sandbox aislado (Rust rewrite)",
+          "description": "Reescritura completa de Dangerzone de Freedom of the Press Foundation en Rust. Convierte documentos no confiables (PDFs, Office, imágenes, EPUBs) en PDFs seguros renderizándolos a píxeles raw dentro de un contenedor desechable y reconstruyendo un PDF completamente nuevo desde cero. El contenido activo (scripts, macros, objetos embebidos, exploits) es destruido en el proceso; solo sobreviven los datos de píxeles inofensivos.\n\nEl proyecto es local, offline-first, sin red en el sandbox, y completamente open-source. Arquitectura de 7 crates: dz-core (lógica central), dz-cli (binario principal), dz-converter (binario sandbox), dz-output (reconstrucción PDF), dz-runtime (proveedores de aislamiento), dz-update (actualizaciones firmadas), dz-gui (interfaz nativa egui/eframe).\n\nSeguridad: El archivo original nunca toca parsers del host. Todo parsing peligroso ocurre dentro del sandbox desechable. El host solo recibe buffers de píxeles raw. Sandbox con: sin red, rootfs read-only, non-root user, seccomp (~300 syscalls), AppArmor, resource limits, y destrucción después de cada conversión. Output validation rechaza JavaScript, archivos embebidos, launch actions. PDFs deterministas: mismo input = byte-identical output.",
+          "technologies": ["Rust", "Podman", "PDFium", "seccomp", "AppArmor", "lopdf"],
+          "metrics": [
+            { "label": "Tests", "value": "120+" },
+            { "label": "Crates", "value": "7" },
+            { "label": "Fases", "value": "5/5" },
+            { "label": "Formatos", "value": "12+" }
+          ],
+          "highlights": [
+            "Wire protocol: host y sandbox intercambian solo píxeles raw via stdin/stdout",
+            "Sandbox: sin red, rootfs read-only, non-root (UID 1000), seccomp, AppArmor",
+            "Output validation: rechaza JavaScript, archivos embebidos, launch actions, forms",
+            "PDFs deterministas: mismo input = byte-identical output (sin timestamps ni metadata)",
+            "Soporte multi-formato: PDF, PNG, JPEG, TIFF, GIF, BMP, SVG, Office (via LibreOffice), EPUB",
+            "GUI nativa con egui/eframe: drag-and-drop, file dialogs, progress logs",
+            "Actualizaciones firmadas: cosign signatures + Rekor transparency log"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/DangerZone",
+          "video": "assets/videos/dangerzone.mp4",
+          "status": "active"
+        },
+        {
+          "id": "forensiq",
+          "name": "ForensIQ",
+          "tagline": "Forensics de memoria y threat hunting con ML",
+          "description": "Plataforma de forensics de memoria que analiza dumps de RAM de Windows (.raw, .dmp, .vmem) para detectar malware fileless y amenazas residentes en memoria. Opera 100% offline con inteligencia de amenazas opcional. Extrae artefactos via Volatility 3 (pslist, netscan, dlllist, malfind, vadinfo, handles, svcscan), calcula 20 features por proceso (entropía Shannon, heurísticas padre-hijo, anomalías VAD, comportamiento de red), y clasifica con ensemble XGBoost + IsolationForest entrenado en CIC-MalMem2022 (ROC-AUC 1.000, F1 0.9999).\n\n7 plugins de detección: ProcessAnomalyDetector (threshold adaptivo, mascarada), CrossViewDetector (DKOM/rootkits), HandlesMutexDetector (mutexes maliciosos), ServicesScanDetector (servicios Windows), PEHeaderDetector (análisis PE), MalfindStringsDetector (IOCs de string), ThreatIntelDetector (VT/MalwareBazaar). Generación de reglas YARA asistida por LLM local (Ollama + Mistral) con validación automática.\n\nReportes: HTML autocontenido + JSON estructurado + STIX 2.1. Timeline mapeada a MITRE ATT&CK.SHAP TreeExplainer para atribución por proceso. Análisis Linux live vía /proc/kcore o LiME. Diff de memory dumps: compara dos capturas para detectar cambios. 885 tests, CI/CD con GitHub Actions.",
+          "technologies": ["Python", "Volatility 3", "XGBoost", "SHAP", "YARA", "Ollama"],
+          "metrics": [
+            { "label": "Tests", "value": "885" },
+            { "label": "ROC-AUC", "value": "1.000" },
+            { "label": "F1", "value": "0.9999" },
+            { "label": "Features", "value": "20" }
+          ],
+          "highlights": [
+            "7 plugins de detección: procesos, DKOM/rootkit, mutex, servicios, PE, IOCs, threat intel",
+            "Clasificación ML: XGBoost + IsolationForest con 20 features y SHAP TreeExplainer",
+            "Generación de reglas YARA con LLM local (Ollama + Mistral) — sin costo API",
+            "Análisis Linux live vía /proc/kcore o LiME con ISF automático",
+            "Diff de memory dumps: compara dos capturas para detectar cambios en procesos/conexiones",
+            "Reportes: HTML autocontenido + JSON + STIX 2.1 para integración con MISP/OpenCTI",
+            "885 tests unitarios + integración, CI/CD con coverage mínimo 50%"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/ForensIQ",
+          "video": "assets/videos/forensiq.mp4",
+          "status": "active"
+        },
+        {
+          "id": "redops",
+          "name": "RedOps_Automatico",
+          "tagline": "Pentesting automatizado orquestado por LLM local",
+          "description": "Framework de penetration testing completamente automatizado orquestado por un LLM local (Ollama/Mistral). Ejecuta un engagement completo PTES (Penetration Testing Execution Standard) desde descubrimiento de hosts hasta reporte PDF firmado, con trazabilidad de decisiones del LLM y limpieza garantizada de sesiones.\n\nPipeline PTES: RECON (nmap -sn, OS fingerprint, banner grab, Scapy ARP fallback) → SCAN (TCP SYN/UDP, correlación servicio→CVE/CVSS, catálogo de exploits) → EXPLOIT (LLM selecciona módulo óptimo de catálogo Metasploit, retries con backoff, circuit breaker tras 3 fallos) → POST-EXPLOIT (evidence gathering, PE vector identification: SUID, cron, sudo, writable) → REPORT (PDF profesional con cover page, executive summary, findings, attack paths, timeline, remediations).\n\n3 perfiles de evasión: Stealth (3-8s jitter, 8 bytes fragment, 5 decoys RFC-1918, top 100 ports), Balanced (1-3s, 16 bytes, top 1000), Aggressive (0.1-0.5s, 32 bytes, full 1-65535 + UDP). CVSSv3.1 calculator nativo (sin librerías externas). TUI interactiva con Rich (dashboard, wizards, health checks). Checkpoint & recovery: session state persistido a JSON. Session teardown garantizado en finally block. 47 tests, code quality con Ruff + mypy strict.",
+          "technologies": ["Python", "Metasploit", "Ollama", "Scapy", "VirtualBox", "ReportLab"],
+          "metrics": [
+            { "label": "Tests", "value": "47" },
+            { "label": "Pipeline", "value": "PTES" },
+            { "label": "Perfiles", "value": "3" },
+            { "label": "CVEs", "value": "5+" }
+          ],
+          "highlights": [
+            "Pipeline PTES completo: Recon → Scan → Exploit → Post-Exploit → Report",
+            "3 perfiles de evasión: Stealth, Balanced, Aggressive con Scapy",
+            "TUI interactiva con Rich (dashboard, wizards, health checks en tiempo real)",
+            "Reportes PDF profesionales con CVSS v3.1, MITRE ATT&CK, timeline, attack paths",
+            "Session teardown garantizado: cierra todas las sesiones MSF al finalizar (finally block)",
+            "Checkpoint & recovery: session state persistido a JSON, resume desde último checkpoint",
+            "CVSSv3.1 calculator nativo siguiendo especificación FIRST (sin dependencias externas)"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/RedOps_Automatico",
+          "video": "assets/videos/redops.mp4",
+          "status": "active"
+        },
+        {
+          "id": "vpnforge",
+          "name": "VPNForge",
+          "tagline": "Suite VPN multi-protocolo (WireGuard, OpenVPN, IPsec)",
+          "description": "Suite VPN de producción con soporte multi-protocolo. Daemon en Rust con control gRPC, clientes GUI en Python/PySide6, y hardening de seguridad con kill switch, prevención de DNS leaks, y protecciones de proceso. WireGuard completo vía boringtun (Cloudflare, userspace), OpenVPN con TLS 1.3 (rustls), e IPsec IKEv2 con integración strongSwan VICI.\n\nSeguridad: ChaCha20-Poly1305 / AES-256-GCM AEAD, kill switch via nftables/iptables (default-deny), DNS leak prevention con DoT/DoH proxy (Cloudflare, Quad9), process hardening (prctl(PR_SET_DUMPABLE, 0), mlockall, PR_SET_NO_NEW_PRIVS), Ed25519 profile signing, Argon2id at-rest encryption para private keys, zeroizing keys en memoria.\n\nArquitectura: vpnd daemon (gRPC server, session manager, kill switch, WireGuard/OpenVPN/IPsec tunnels, crypto ring, routing netlink, DNS guard, metrics collector) + vpnctl CLI (14 subcomandos) + client-gui (PySide6) + admin-gui (PySide6 con dashboard en tiempo real, topology view, alerts). Unix domain socket con SO_PEERCRED para autenticación IPC. 64+ tests, systemd service con security hardening.",
+          "technologies": ["Rust", "Python", "PySide6", "WireGuard", "OpenVPN", "IPsec"],
+          "metrics": [
+            { "label": "Tests", "value": "64+" },
+            { "label": "Protocolos", "value": "3" },
+            { "label": "Crates", "value": "8" },
+            { "label": "RPCs", "value": "25+" }
+          ],
+          "highlights": [
+            "WireGuard completo vía boringtun (Cloudflare, userspace) con key rotation",
+            "Kill switch: política default-deny con nftables/iptables, persiste tras desconexión",
+            "DNS leak prevention: resolver VPN-only con test integrado + DoT/DoH proxy",
+            "Process hardening: prctl(PR_SET_DUMPABLE, 0), mlockall(), zeroizing keys, PR_SET_NO_NEW_PRIVS",
+            "CLI con 14 subcomandos + GUI dual (client + admin panel con topology view)",
+            "gRPC over Unix socket con SO_PEERCRED para autenticación IPC",
+            "Ed25519 profile signing + Argon2id at-rest encryption para keys"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/VPN",
+          "video": "assets/videos/vpnforge.mp4",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "id": "ia",
+      "name": "ia",
+      "description": "Agentes IA y ML aplicado",
+      "color": "ai",
+      "projects": [
+        {
+          "id": "invima",
+          "name": "InvimaRSMolecula",
+          "tagline": "Agentes IA para registro sanitario de moléculas (INVIMA)",
+          "description": "Sistema multi-agente de IA para asistir la evaluación de expedientes de registro sanitario de moléculas farmacéuticas en INVIMA. Hackatón INVIMA del Futuro — pista híbrida (A: escalar la comprensión humana, B: habilitar flujos autónomos de bajo riesgo). El principio rector: el art. 7.1 de la Resolución 2026025611 prohíbe usar IA para sustituir la decisión administrativa, implementado por diseño en el código.\n\nEl modelo solo transcribe (LLM detrás de ExtractorMetadatosPort, contrato texto→estructura). Ningún dato viaja desnudo (todo campo es Dato[T] con origen y trazabilidad). Sin persona no hay enrutamiento (EstadoExpediente no tiene transición automática a ENRUTADO). Pipeline de 9 pasos: Ingesta (Docling local MIT) → Metadata ASS-RSA-FM113 (Gemini Flash, temp=0) → Validación pago (motor puro, corte temprano) → Autovalidación (CPP/CVL, matriz agencias) → Reliance (openFDA, EMA, ClinicalTrials.gov, cacheado) → Contraste (indicación vs aprobada) → Bypass check (Manual Normas Farmacéuticas) → Enrutamiento (EXPRESS/ESTÁNDAR) → Entrega al evaluador.\n\nCosto: presupuesto USD 5. Docling local para OCR, cache en disco por fuente, Flash para extracción, adaptadores locales para desarrollo (61 tests sin red ni costo). Dossieres sintéticos: coracilimab (happy path), pago inconsistente, metformina, discrepancia declarativa, indicación ampliada, inyección prompt.",
+          "technologies": ["Python", "FastAPI", "Gemini", "React", "Docling", "PostgreSQL"],
+          "metrics": [
+            { "label": "Tests", "value": "61+" },
+            { "label": "Pipeline", "value": "9 pasos" },
+            { "label": "Budget", "value": "$5 USD" },
+            { "label": "Dossieres", "value": "6" }
+          ],
+          "highlights": [
+            "Human-in-the-loop obligatorio (Art. 7.1 Resolución 2026025611) — implementado por tipo",
+            "Pipeline de 9 pasos: Ingesta → Metadata → Pago → Validación → Reliance → ...",
+            "Trazabilidad de datos: cada campo carry su origen (EXTRAIDO/BUSQUEDA/RECOMENDACION) y folio",
+            "Modo offline/deterministic: sin red, sin costo, adaptadores locales para desarrollo",
+            "Docker Compose: PostgreSQL + API + Frontend, 61 tests sin dependencias externas",
+            "6 dossieres sintéticos que ejercitan happy path, edge cases y prompt injection"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/InvimaRSMolecula",
+          "status": "active"
+        },
+        {
+          "id": "audio",
+          "name": "ProcesamientoAudioIA",
+          "tagline": "Restauración profesional de audio con DSP + neural",
+          "description": "Toolkit profesional de restauración de audio que combina algoritmos DSP clásicos con modelos neuronales modernos. Diseñado para rescatar grabaciones degradadas — transfers de vinilo, casetes, transmisiones de radio históricas y archivos. Cadena completa: dehum (50/60Hz notch) → declick (LPC click/scratch repair) → denoise (HPSS+Wiener, spectral subtraction, DeepFilterNet, wavelet BayesShrink) → source separation (Demucs) → super-resolution (AudioSR/scipy) → mastering EQ (5-band + rumble filter) → multiband compression (3-band Linkwitz-Riley) → M/S stereo processing → LUFS loudness normalization.\n\nTrue stereo end-to-end: cada etapa DSP opera channel-wise, stereo nunca se down-mixea. 8 presets de género: vinyl, jazz, classical, hiphop, metal, electronic, podcast, flat. Wow & flutter correction para grabaciones analógicas antiguas. Múltiples motores de denoising con fallback chain auto. TUI bilingüe EN/ES con 6 pantallas (Textual): Home, Single, Batch, Profiles, History, About.\n\nGraceful degradation: DSP core funciona sin PyTorch. Super-resolution fallback a scipy polyphase resampler. 188 tests, CI con ruff + mypy + coverage gate 60%. Python >= 3.10, packaged como audio_restoration.",
+          "technologies": ["Python", "PyTorch", "librosa", "Textual", "DeepFilterNet", "Demucs"],
+          "metrics": [
+            { "label": "Tests", "value": "188" },
+            { "label": "Coverage", "value": "80%" },
+            { "label": "Fases", "value": "6" },
+            { "label": "Presets", "value": "8" }
+          ],
+          "highlights": [
+            "Cadena completa: Dehum → Declick → Denoise → Separate → Master → Normalize",
+            "8 presets de género: vinyl, jazz, classical, hiphop, metal, electronic, podcast, flat",
+            "Wow & flutter correction para grabaciones analógicas antiguas",
+            "TUI bilingüe EN/ES con 6 pantallas (Textual) — keyboard shortcuts completos",
+            "Graceful degradation: DSP core funciona sin PyTorch, super-resolution fallback a scipy",
+            "True stereo end-to-end: cada etapa DSP opera channel-wise, nunca down-mixea",
+            "188 tests, CI/CD con ruff + mypy + coverage gate 60%"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/AI_Audio_Processing",
+          "status": "active"
+        },
+        {
+          "id": "resurge",
+          "name": "ResurgeAgent",
+          "tagline": "Coordinación inteligente de respuesta a desastres",
+          "description": "Sistema de coordinación de respuesta a desastres que convierte información dispersa de múltiples fuentes en decisiones estructuradas y accionables. Arquitectura multi-agente (20 agentes) que identifica necesidades, riesgos, recursos disponibles y zonas que requieren atención. Pipeline de 11 pasos: Ingesta → Verificación → Geoespacial → Orquestador → Necesidades → Recursos → Matching → Logística → Asignación → Comunicación → Seguimiento.\n\nAgentes especializados: Orquestador, Ingesta, Verificación, Riesgos, Geoespacial/Movilidad, Necesidades, Recursos, Voluntarios, Matching/Asignación, Logístico, Afectados, Puntos de Ayuda, Comunicación/Alertas, Seguimiento, Jurídico, Ayudas/Beneficios, Reconstrucción, Reactivación Económica, Financiero. Human-in-the-loop: firma de coordinador obligatoria antes de asignar recursos.\n\nRed mesh con sobres Ed25519 para reportes tamper-proof. Operación degradable: fallback a reglas cuando LLM no disponible. Frontend Leaflet: dashboard centrado en mapa para coordinadores. Dimensión de recuperación: agentes jurídicos, ayudas gubernamentales, reconstrucción y reactivación económica. Backend FastAPI + React + Gemini para procesamiento de lenguaje natural.",
+          "technologies": ["Python", "FastAPI", "Gemini", "React", "Leaflet", "NetworkX"],
+          "metrics": [
+            { "label": "Agentes", "value": "20" },
+            { "label": "Pasos", "value": "11" },
+            { "label": "Fases", "value": "2" }
+          ],
+          "highlights": [
+            "Pipeline de 11 pasos: Ingesta → Verificación → Geoespacial → Orquestador → ...",
+            "20 agentes especializados coordinados por agente orquestador central",
+            "Human-in-the-loop: firma de coordinador obligatoria antes de asignar recursos",
+            "Red mesh con sobres Ed25519 para reportes tamper-proof",
+            "Operación degradable: fallback a reglas cuando LLM no disponible",
+            "Frontend Leaflet: dashboard centrado en mapa para coordinadores",
+            "Dimensión recuperación: agentes jurídicos, ayudas, reconstrucción, reactivación económica"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/ResurgeArgent",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "id": "appweb",
+      "name": "appweb",
+      "description": "Aplicaciones web full-stack",
+      "color": "web",
+      "projects": [
+        {
+          "id": "colorcafe",
+          "name": "ColorCafe",
+          "tagline": "PWA de análisis de café con visión artificial",
+          "description": "Plataforma PWA para análisis de granos de café y gestión de datos de finca cafetera. Permite a productores tomar una foto de su café (cereza, pergamino, trilla), recibir análisis automático de madurez y calidad, y mantener un historial de métricas diarias, semanales, mensuales y anuales. Asistencia fotográfica en vivo: feedback rojo/amarillo/verde en tiempo real para condiciones óptimas de captura.\n\nArquitectura de microservicios: Frontend React 18 + TypeScript + Vite + Tailwind CSS + PWA (Capacitor para APK Android), Backend Node.js 20 + TypeScript + Express (vertical slices), PythonAnalysis FastAPI + OpenCV (pipeline heurístico determinista). Datos: PostgreSQL/Timescale + Redis + MinIO. IA generativa: Ollama (mistral:7b-instruct) para contenido.\n\nAlmanaque interactivo con métricas históricas agregadas. CI/CD completo: Typecheck, Lint, Test, Build, Trivy scan, SBOM, CodeQL. Optimizado para bajo ancho de banda: carga progresiva, service worker, almacenamiento offline, colas de sincronización. Docker Compose para desarrollo local y producción.",
+          "technologies": ["React", "TypeScript", "Python", "OpenCV", "PostgreSQL", "Redis"],
+          "metrics": [
+            { "label": "Platform", "value": "PWA+APK" },
+            { "label": "Services", "value": "7" },
+            { "label": "CI/CD", "value": "GitHub Actions" }
+          ],
+          "highlights": [
+            "Asistencia fotográfica en vivo: feedback rojo/amarillo/verde en tiempo real",
+            "Almanaque interactivo con métricas históricas agregadas (diario, semanal, mensual, anual)",
+            "Microservicios: Backend Node.js, Frontend React, PythonAnalysis (FastAPI+OpenCV)",
+            "CI/CD completo: Typecheck, Lint, Test, Build, Trivy scan, SBOM, CodeQL",
+            "Android APK vía Capacitor, optimizado para bajo ancho de banda",
+            "Análisis heurístico determinista (heuristic-v1) con algorithm_version en cada respuesta",
+            "Noticias del campo colombiano + Mercado con publicaciones, listados y órdenes"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/ColorCafe",
+          "status": "active"
+        },
+        {
+          "id": "finalstore",
+          "name": "FinalStore",
+          "tagline": "E-commerce con AI try-on, búsqueda por voz y tiempo real",
+          "description": "Plataforma e-commerce full-stack con virtual try-on impulsado por IA, búsqueda por voz, y notificaciones en tiempo real. Backend en Go 1.24 con arquitectura domain-driven (gorilla/mux, golang-migrate), frontend React 18 + TypeScript + Vite 5 + Tailwind CSS + Zustand, y PostgreSQL 16.\n\nVirtual Try-On: chat de IA con Ollama (local LLM) para sugerencias de productos y soporte cámara. Búsqueda por voz: Web Speech API para consultas instantáneas. Smart search: pg_trgm + unaccent + vector index (btree_gin). Loyalty points: acumulación en compra, canje en checkout. Vendor dashboard: gestión de productos, órdenes y estadísticas. Admin panel: orders, returns, role management, product CRUD.\n\nAutenticación: JWT (access + refresh tokens) + Google OAuth. Pagos: Stripe Checkout (+ mock fallback). WebSocket autenticado para notificaciones en tiempo real. Order lifecycle: pending → paid → shipped → delivered. Returns & refunds: customer-initiated, admin-approved workflow. Dark mode system-aware. PWA con service worker. Observability: Prometheus-compatible /metrics endpoint. Docker + Docker Compose para deploy.",
+          "technologies": ["Go", "React", "TypeScript", "Stripe", "Ollama", "WebSocket"],
+          "metrics": [
+            { "label": "i18n", "value": "Multi" },
+            { "label": "PWA", "value": "Si" },
+            { "label": "Metrics", "value": "Prometheus" },
+            { "label": "API Endpoints", "value": "60+" }
+          ],
+          "highlights": [
+            "Virtual try-on AI: chat de IA con sugerencias de productos y soporte cámara",
+            "Búsqueda por voz: Web Speech API para consultas instantáneas",
+            "Smart search: pg_trgm + unaccent + vector index para full-text search",
+            "Loyalty points: acumulación en compra, canje en checkout",
+            "Vendor dashboard: gestión de productos, órdenes y estadísticas de ventas",
+            "WebSocket autenticado para notificaciones en tiempo real",
+            "60+ API endpoints documentados: Auth, Products, Search, Cart, Orders, Returns, Loyalty, Vendor, AI Chat"
+          ],
+          "githubUrl": "https://github.com/Dacr2153/Store",
+          "status": "active"
+        }
+      ]
+    }
+  ]
+}
