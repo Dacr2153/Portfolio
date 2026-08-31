@@ -920,3 +920,4 @@ Estructura completa de los 10 proyectos con todas las métricas, tecnologías y 
 
 *Documento de especificación — Portafolio Terminal UI*
 *2026-08-30*
+
