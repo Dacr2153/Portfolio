@@ -1,14 +1,20 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>David Colorado â€” Ingeniero de Sistemas en Formacion</title>
-  <meta name="description" content="Portfolio profesional de David Colorado. Ciberseguridad Junior, automatizacion y desarrollo de aplicaciones.">
+  <title>David Colorado — Ingeniero de Sistemas en Formación</title>
+  <meta name="description" content="Portfolio profesional de David Colorado. Ciberseguridad Junior, automatización y desarrollo de aplicaciones.">
   <meta name="author" content="David Colorado">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -25,19 +31,16 @@
     ::-webkit-scrollbar{width:4px}
     ::-webkit-scrollbar-track{background:var(--bg)}
     ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-
     .grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.03}
-    .grain::before{content:'';position:absolute;inset:-200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 8s steps(10) infinite}
+    .grain::before{content:'';position:absolute;inset:-200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%2on)'/%3E%3C/svg%3E");animation:grain 8s steps(10) infinite}
     @keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-10%)}20%{transform:translate(-15%,5%)}30%{transform:translate(7%,-25%)}40%{transform:translate(-5%,25%)}50%{transform:translate(-15%,10%)}60%{transform:translate(15%,0%)}70%{transform:translate(0%,15%)}80%{transform:translate(3%,35%)}90%{transform:translate(-10%,10%)}}
-
-    .cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:10001;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s}
-    .cursor-ring{position:fixed;top:0;left:0;width:40px;height:40px;border:1.5px solid var(--accent);border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .4s cubic-bezier(.16,1,.3,1),height .4s cubic-bezier(.16,1,.3,1),border-color .3s,opacity .3s;mix-blend-mode:difference}
-    .cursor-ring.hover{width:64px;height:64px}
+    .cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:10001;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s;opacity:1}
+    .cursor-ring{position:fixed;top:0;left:0;width:40px;height:40px;border:1.5px solid var(--accent);border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .4s cubic-bezier(.16,1,.3,1),height .4s cubic-bezier(.16,1,.3,1),border-color .3s,opacity .3s;opacity:.6}
+    .cursor-ring.hover{width:64px;height:64px;opacity:1;border-color:var(--accent2)}
     .cursor-dot.hover{width:4px;height:4px}
-    @media(hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none}body{cursor:auto}}
-
+    @media(hover:none),(pointer:coarse){.cursor-dot,.cursor-ring{display:none!important}body{cursor:auto!important}}
+    @media(hover:hover) and (pointer:fine){body{cursor:none}a,button,.btn,.filter-btn{cursor:none}}
     .scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--purple));z-index:10000;width:0%;transition:width .1s linear}
-
     .nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
     .nav.scrolled{background:rgba(6,6,8,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom-color:var(--border)}
     .nav-logo{font-weight:700;font-size:1.1rem;letter-spacing:-.02em;color:var(--text);text-decoration:none}
@@ -53,20 +56,19 @@
     .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
     .nav-toggle.open span:nth-child(2){opacity:0}
     .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  </style>  <style>
     @media(max-width:768px){
       .nav-links{position:fixed;inset:0;background:rgba(6,6,8,.97);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);flex-direction:column;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .5s cubic-bezier(.16,1,.3,1);z-index:1001}
       .nav-links.open{opacity:1;pointer-events:all}
       .nav-links a{font-size:1.5rem;font-weight:500}
       .nav-toggle{display:flex}
     }
-
     section{padding:6rem 2rem}
     .container{max-width:1200px;margin:0 auto}
     .section-label{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}
     .section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
     .section-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:1.5rem}
     .section-subtitle{color:var(--text2);font-size:1.05rem;max-width:600px;line-height:1.7}
-
     .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-delay-1{transition-delay:.1s}
@@ -101,6 +103,7 @@
     .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) 1.3s forwards}
     @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
     .hero-subtitle,.hero-actions{transform:translateY(20px)}
+  </style>  <style>
     .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:100px;font-family:var(--font);font-size:.9rem;font-weight:500;text-decoration:none;cursor:none;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;position:relative;overflow:hidden}
     .btn-primary{background:var(--accent);color:var(--bg);border:none}
     .btn-primary:hover{box-shadow:0 0 40px rgba(200,255,0,.25)}
@@ -113,7 +116,6 @@
     .orb-2{width:400px;height:400px;background:var(--accent2);bottom:10%;left:0%;animation-delay:-7s}
     .orb-3{width:350px;height:350px;background:var(--purple);top:50%;left:40%;animation-delay:-14s}
     @keyframes orbDrift{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-50px) scale(1.1)}66%{transform:translate(-20px,30px) scale(.95)}100%{transform:translate(10px,-20px) scale(1.05)}}
-
     .marquee-section{padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
     .marquee-row{display:flex;overflow:hidden}
     .marquee-track{display:flex;gap:3rem;animation:marqueeScroll 30s linear infinite;width:max-content}
@@ -121,7 +123,6 @@
     .marquee-item{font-family:var(--mono);font-size:.85rem;color:var(--text3);white-space:nowrap;display:flex;align-items:center;gap:.75rem;flex-shrink:0;transition:color .3s}
     .marquee-item .sep{color:var(--accent);opacity:.4}
     @keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
     .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:3rem}
     .about-text p{color:var(--text2);line-height:1.8;margin-bottom:1.5rem;font-size:1.05rem}
     .about-text strong{color:var(--text);font-weight:600}
@@ -131,7 +132,7 @@
     .about-highlight .num{font-size:1.75rem;font-weight:700;color:var(--accent);font-family:var(--mono)}
     .about-highlight .label{font-size:.8rem;color:var(--text3);margin-top:.25rem}
     @media(max-width:768px){.about-grid{grid-template-columns:1fr;gap:2rem}}
-
+  </style>  <style>
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
     .stat-card{padding:2rem;border:1px solid var(--border);border-radius:16px;background:var(--surface);text-align:center;transition:border-color .3s,transform .4s cubic-bezier(.16,1,.3,1)}
     .stat-card:hover{border-color:var(--accent);transform:translateY(-4px)}
@@ -139,7 +140,6 @@
     .stat-suffix{font-size:1.5rem}
     .stat-label{font-size:.85rem;color:var(--text2);margin-top:.5rem}
     @media(max-width:640px){.stats-grid{grid-template-columns:1fr 1fr}}
-
     .timeline{position:relative;padding-left:3rem;margin-top:3rem}
     .timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--accent),var(--purple),var(--accent2))}
     .timeline-item{position:relative;padding-bottom:3rem;padding-left:2rem}
@@ -172,7 +172,7 @@
     .tech-tag{padding:.2rem .6rem;border-radius:6px;font-size:.7rem;font-family:var(--mono);background:var(--bg2);color:var(--text3);border:1px solid var(--border)}
     .project-card.hidden{display:none}
     @media(max-width:768px){.projects-grid{grid-template-columns:1fr}}
-
+  </style>  <style>
     .certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-top:3rem}
     .cert-card{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem;border:1px solid var(--border);border-radius:12px;background:var(--surface);transition:border-color .3s,transform .4s cubic-bezier(.16,1,.3,1)}
     .cert-card:hover{border-color:var(--accent);transform:translateY(-2px)}
@@ -187,14 +187,12 @@
     .edu-info{flex:1}
     .edu-name{font-size:.9rem;font-weight:600}
     .edu-detail{font-size:.75rem;color:var(--text3);font-family:var(--mono);margin-top:.15rem}
-
     .contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:3rem}
     .contact-card{display:flex;align-items:center;gap:1rem;padding:1.5rem;border:1px solid var(--border);border-radius:12px;background:var(--surface);text-decoration:none;color:var(--text);transition:border-color .3s,transform .4s cubic-bezier(.16,1,.3,1)}
     .contact-card:hover{border-color:var(--accent);transform:translateY(-4px)}
     .contact-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:rgba(200,255,0,.08);border:1px solid rgba(200,255,0,.12)}
     .contact-label{font-size:.75rem;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
     .contact-value{font-size:.9rem;font-weight:500;margin-top:.15rem}
-
     .footer{padding:3rem 2rem;border-top:1px solid var(--border);text-align:center}
     .footer-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
     .footer-text{font-size:.8rem;color:var(--text3)}
@@ -202,16 +200,7 @@
     .footer-links a{font-size:.8rem;color:var(--text3);text-decoration:none;transition:color .3s}
     .footer-links a:hover{color:var(--accent)}
     @media(max-width:640px){.footer-content{flex-direction:column}}
-  </style>
-</head>
-<body>
-
-  <div class="grain"></div>
-  <div class="scroll-progress" id="scrollProgress"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <nav class="nav" id="nav">
+  </style>  <nav class="nav" id="nav">
     <a href="#hero" class="nav-logo"><span>D</span>Colorado</a>
     <div class="nav-links" id="navLinks">
       <a href="#hero" class="active">Inicio</a>
@@ -225,13 +214,11 @@
       <span></span><span></span><span></span>
     </button>
   </nav>
-
   <div class="orbs">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
   </div>
-
   <section class="hero" id="hero">
     <div class="container hero-content">
       <div class="hero-badge"><span class="dot"></span>Disponible para proyectos</div>
@@ -241,15 +228,13 @@
         <span class="word"><span class="word-inner">Colorado</span></span>
         <span class="word"><span class="word-inner">Rodriguez</span></span>
       </h1>
-      <p class="hero-subtitle">Ingeniero de Sistemas en Formacion &mdash; Ciberseguridad Junior. Automatizacion, desarrollo de aplicaciones y seguridad informatica.</p>
+      <p class="hero-subtitle">Ingeniero de Sistemas en Formación — Ciberseguridad Junior. Automatización, desarrollo de aplicaciones y seguridad informática.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary"><span class="magnetic-content">Ver Proyectos</span></a>
         <a href="#contact" class="btn btn-secondary"><span class="magnetic-content">Contactar</span></a>
       </div>
     </div>
-  </section>
-
-  <div class="marquee-section">
+  </section>  <div class="marquee-section">
     <div class="marquee-row">
       <div class="marquee-track" id="marquee1">
         <span class="marquee-item">Python <span class="sep">//</span></span>
@@ -276,10 +261,10 @@
         <span class="marquee-item">Forense Digital <span class="sep">//</span></span>
         <span class="marquee-item">IA / Machine Learning <span class="sep">//</span></span>
         <span class="marquee-item">Redes <span class="sep">//</span></span>
-        <span class="marquee-item">AnÃ¡lisis de Datos <span class="sep">//</span></span>
+        <span class="marquee-item">Análisis de Datos <span class="sep">//</span></span>
         <span class="marquee-item">VPN / Firewall <span class="sep">//</span></span>
         <span class="marquee-item">Desarrollo Web <span class="sep">//</span></span>
-        <span class="marquee-item">AutomatizaciÃ³n <span class="sep">//</span></span>
+        <span class="marquee-item">Automatización <span class="sep">//</span></span>
         <span class="marquee-item">Open Source <span class="sep">//</span></span>
         <span class="marquee-item">CI/CD <span class="sep">//</span></span>
         <span class="marquee-item">Kali Linux <span class="sep">//</span></span>
@@ -290,107 +275,76 @@
         <span class="marquee-item">Ethical Hacking <span class="sep">//</span></span>
       </div>
     </div>
-  </div>
-
-  <section id="about">
+  </div>  <section id="about">
     <div class="container">
       <div class="reveal">
         <span class="section-label">// Sobre mi</span>
-        <h2 class="section-title">Construyendo en la interseccion<br>de <span style="color:var(--accent)">seguridad</span> y <span style="color:var(--accent2)">tecnologia</span></h2>
+        <h2 class="section-title">Construyendo en la intersección<br>de <span style="color:var(--accent)">seguridad</span> y <span style="color:var(--accent2)">tecnología</span></h2>
       </div>
       <div class="about-grid">
         <div class="about-text reveal reveal-delay-1">
-          <p>Soy <strong>David Alexander Colorado Rodriguez</strong>, Ingeniero de Sistemas en formacion con enfoque en ciberseguridad. Con <strong>3 anos de experiencia freelance</strong>, he trabajado con clientes que buscan soluciones robustas en seguridad informatica, desarrollo web y automatizacion de procesos.</p>
-          <p>Mi enfoque combina la mentalidad de atacante con la mentalidad de defensor: entiendo las vulnerabilidades para construir sistemas mas seguros. Apasionado por el codigo abierto, la investigacion en seguridad y la enseÃ±anza de tecnologia.</p>
+          <p>Soy <strong>David Alexander Colorado Rodriguez</strong>, Ingeniero de Sistemas en formación con enfoque en ciberseguridad. Con <strong>3 años de experiencia freelance</strong>, he trabajado con clientes que buscan soluciones robustas en seguridad informática, desarrollo web y automatización de procesos.</p>
+          <p>Mi enfoque combina la mentalidad de atacante con la mentalidad de defensor: entiendo las vulnerabilidades para construir sistemas más seguros. Apasionado por el código abierto, la investigación en seguridad y la enseñanza de tecnología.</p>
           <div class="about-highlights">
-            <div class="about-highlight">
-              <div class="num">3+</div>
-              <div class="label">Anos de experiencia</div>
-            </div>
-            <div class="about-highlight">
-              <div class="num">4</div>
-              <div class="label">Clientes satisfechos</div>
-            </div>
-            <div class="about-highlight">
-              <div class="num">10</div>
-              <div class="label">Proyectos completados</div>
-            </div>
-            <div class="about-highlight">
-              <div class="num">3</div>
-              <div class="label">Certificaciones</div>
-            </div>
+            <div class="about-highlight"><div class="num">3+</div><div class="label">Años de experiencia</div></div>
+            <div class="about-highlight"><div class="num">4</div><div class="label">Clientes satisfechos</div></div>
+            <div class="about-highlight"><div class="num">10</div><div class="label">Proyectos completados</div></div>
+            <div class="about-highlight"><div class="num">3</div><div class="label">Certificaciones</div></div>
           </div>
         </div>
         <div class="about-text reveal reveal-delay-2">
-          <p>Mi stack tecnico abarca desde <strong>Python y Linux</strong> hasta herramientas de pentesting como <strong>Burp Suite, Metasploit y Wireshark</strong>. Tambien tengo experiencia en desarrollo web con React, Node.js y bases de datos SQL/NoSQL.</p>
-          <p>Actualmente enfocado en fortalecer mis habilidades en analisis de seguridad, respuesta a incidentes y arquitectura de redes seguras. Busco constantemente nuevos desafios que me permitan crecer profesionalmente y contribuir a la seguridad del ecosistema digital.</p>
+          <p>Mi stack técnico abarca desde <strong>Python y Linux</strong> hasta herramientas de pentesting como <strong>Burp Suite, Metasploit y Wireshark</strong>. También tengo experiencia en desarrollo web con React, Node.js y bases de datos SQL/NoSQL.</p>
+          <p>Actualmente enfocado en fortalecer mis habilidades en análisis de seguridad, respuesta a incidentes y arquitectura de redes seguras. Busco constantemente nuevos desafíos que me permitan crecer profesionalmente y contribuir a la seguridad del ecosistema digital.</p>
         </div>
       </div>
     </div>
-  </section>
-
-  <section id="stats">
+  </section>  <section id="stats">
     <div class="container">
       <div class="stats-grid">
-        <div class="stat-card reveal">
-          <div class="stat-number" data-target="3" data-suffix="+">0</div>
-          <div class="stat-label">Anos de experiencia</div>
-        </div>
-        <div class="stat-card reveal reveal-delay-1">
-          <div class="stat-number" data-target="4" data-suffix="">0</div>
-          <div class="stat-label">Clientes</div>
-        </div>
-        <div class="stat-card reveal reveal-delay-2">
-          <div class="stat-number" data-target="10" data-suffix="">0</div>
-          <div class="stat-label">Proyectos</div>
-        </div>
-        <div class="stat-card reveal reveal-delay-3">
-          <div class="stat-number" data-target="3" data-suffix="">0</div>
-          <div class="stat-label">Certificaciones</div>
-        </div>
+        <div class="stat-card reveal"><div class="stat-number" data-target="3" data-suffix="+">0</div><div class="stat-label">Años de experiencia</div></div>
+        <div class="stat-card reveal reveal-delay-1"><div class="stat-number" data-target="4" data-suffix="">0</div><div class="stat-label">Clientes</div></div>
+        <div class="stat-card reveal reveal-delay-2"><div class="stat-number" data-target="10" data-suffix="">0</div><div class="stat-label">Proyectos</div></div>
+        <div class="stat-card reveal reveal-delay-3"><div class="stat-number" data-target="3" data-suffix="">0</div><div class="stat-label">Certificaciones</div></div>
       </div>
     </div>
   </section>
-
   <section id="experience">
     <div class="container">
       <div class="reveal">
         <span class="section-label">// Experiencia</span>
         <h2 class="section-title">Trayectoria profesional</h2>
-        <p class="section-subtitle">Mi recorrido en ciberseguridad, desarrollo y ensenanza de tecnologia.</p>
+        <p class="section-subtitle">Mi recorrido en ciberseguridad, desarrollo y enseñanza de tecnología.</p>
       </div>
       <div class="timeline">
         <div class="timeline-item reveal">
           <div class="timeline-dot"></div>
-          <div class="timeline-date">2022 â€” Presente</div>
-          <div class="timeline-title">Freelance Developer &amp; Security Analyst</div>
+          <div class="timeline-date">2022 — Presente</div>
+          <div class="timeline-title">Freelance Developer & Security Analyst</div>
           <div class="timeline-org">Independiente</div>
-          <div class="timeline-desc">Desarrollo de aplicaciones web, automatizacion de procesos y consultoria en ciberseguridad para clientes independientes. Implementacion de soluciones de seguridad, pentesting y auditorias informaticas.</div>
+          <div class="timeline-desc">Desarrollo de aplicaciones web, automatización de procesos y consultoría en ciberseguridad para clientes independientes. Implementación de soluciones de seguridad, pentesting y auditorías informáticas.</div>
         </div>
         <div class="timeline-item reveal">
           <div class="timeline-dot"></div>
-          <div class="timeline-date">2023 â€” 2025</div>
-          <div class="timeline-title">Instructor de Seguridad Informatica</div>
+          <div class="timeline-date">2023 — 2025</div>
+          <div class="timeline-title">Instructor de Seguridad Informática</div>
           <div class="timeline-org">GISAC</div>
-          <div class="timeline-desc">Imparticion de cursos en ciberseguridad, fundamentos de redes y herramientas de analisis de seguridad. Desarrollo de material didactico y practicas hands-on para estudiantes.</div>
+          <div class="timeline-desc">Impartición de cursos en ciberseguridad, fundamentos de redes y herramientas de análisis de seguridad. Desarrollo de material didáctico y prácticas hands-on para estudiantes.</div>
         </div>
         <div class="timeline-item reveal">
           <div class="timeline-dot"></div>
           <div class="timeline-date">2024</div>
           <div class="timeline-title">Instructor de Linux</div>
           <div class="timeline-org">GIOS</div>
-          <div class="timeline-desc">EnsenaÃ±anza de administracion de sistemas Linux, comandos de terminal, permisos, servicios y seguridad del sistema operativo. Configuracion de servidores y manejo de Bash/Shell scripting.</div>
+          <div class="timeline-desc">Enseñanza de administración de sistemas Linux, comandos de terminal, permisos, servicios y seguridad del sistema operativo. Configuración de servidores y manejo de Bash/Shell scripting.</div>
         </div>
       </div>
     </div>
-  </section>
-
-  <section id="projects">
+  </section>  <section id="projects">
     <div class="container">
       <div class="reveal">
         <span class="section-label">// Proyectos</span>
         <h2 class="section-title">Proyectos destacados</h2>
-        <p class="section-subtitle">Una seleccion de proyectos en ciberseguridad, inteligencia artificial y desarrollo web.</p>
+        <p class="section-subtitle">Una selección de proyectos en ciberseguridad, inteligencia artificial y desarrollo web.</p>
       </div>
       <div class="project-filters reveal">
         <button class="filter-btn active" data-filter="all">Todos</button>
@@ -399,338 +353,185 @@
         <button class="filter-btn" data-filter="web">Web</button>
       </div>
       <div class="projects-grid" id="projectsGrid">
-
         <div class="project-card reveal" data-category="ciberseguridad">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">Ciberseguridad</span>
-              </div>
-              <span class="badge badge-metric">Cloud</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">Ciberseguridad</span></div><span class="badge badge-metric">Cloud</span></div>
             <h3 class="project-title">CloudSentinel</h3>
-            <p class="project-desc">Sistema de monitoreo y deteccion de amenazas en entornos cloud. Analiza logs en tiempo real y genera alertas de seguridad automaticas.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">AWS</span>
-              <span class="tech-tag">SIEM</span>
-              <span class="tech-tag">Docker</span>
-            </div>
+            <p class="project-desc">Sistema de monitoreo y detección de amenazas en entornos cloud. Analiza logs en tiempo real y genera alertas de seguridad automáticas.</p>
+            <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">AWS</span><span class="tech-tag">SIEM</span><span class="tech-tag">Docker</span></div>
           </div>
         </div>
-
         <div class="project-card reveal" data-category="ciberseguridad">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">Ciberseguridad</span>
-              </div>
-              <span class="badge badge-metric">Lab</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">Ciberseguridad</span></div><span class="badge badge-metric">Lab</span></div>
             <h3 class="project-title">DangerZone</h3>
-            <p class="project-desc">Laboratorio virtual de practicas de pentesting con maquinas vulnerable configuradas para aprendizaje hands-on de explotacion y post-explotacion.</p>
-            <div class="project-tech">
-              <span class="tech-tag">VirtualBox</span>
-              <span class="tech-tag">Kali</span>
-              <span class="tech-tag">Metasploit</span>
-              <span class="tech-tag">Bash</span>
-            </div>
+            <p class="project-desc">Laboratorio virtual de prácticas de pentesting con máquinas vulnerables configuradas para aprendizaje hands-on de explotación y post-explotación.</p>
+            <div class="project-tech"><span class="tech-tag">VirtualBox</span><span class="tech-tag">Kali</span><span class="tech-tag">Metasploit</span><span class="tech-tag">Bash</span></div>
           </div>
         </div>
-
         <div class="project-card reveal" data-category="ciberseguridad">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">Ciberseguridad</span>
-              </div>
-              <span class="badge badge-metric">Forense</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">Ciberseguridad</span></div><span class="badge badge-metric">Forense</span></div>
             <h3 class="project-title">ForensIQ</h3>
-            <p class="project-desc">Herramienta de analisis forense digital para recuperacion de evidencia, analisis de memoria y reconstruccion de eventos de seguridad.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Volatility</span>
-              <span class="tech-tag">Autopsy</span>
-              <span class="tech-tag">Linux</span>
-            </div>
+            <p class="project-desc">Herramienta de análisis forense digital para recuperación de evidencia, análisis de memoria y reconstrucción de eventos de seguridad.</p>
+            <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Volatility</span><span class="tech-tag">Autopsy</span><span class="tech-tag">Linux</span></div>
           </div>
-        </div>
-
-        <div class="project-card reveal" data-category="ciberseguridad">
+        </div>        <div class="project-card reveal" data-category="ciberseguridad">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">Ciberseguridad</span>
-              </div>
-              <span class="badge badge-metric">Red</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">Ciberseguridad</span></div><span class="badge badge-metric">Red</span></div>
             <h3 class="project-title">RedOps</h3>
-            <p class="project-desc">Plataforma de operaciones de red para escaneo de vulnerabilidades, enumeracion de servicios y generacion automatizada de reportes de auditoria.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Nmap</span>
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Nessus</span>
-              <span class="tech-tag">Bash</span>
-            </div>
+            <p class="project-desc">Plataforma de operaciones de red para escaneo de vulnerabilidades, enumeración de servicios y generación automatizada de reportes de auditoría.</p>
+            <div class="project-tech"><span class="tech-tag">Nmap</span><span class="tech-tag">Python</span><span class="tech-tag">Nessus</span><span class="tech-tag">Bash</span></div>
           </div>
         </div>
-
         <div class="project-card reveal" data-category="ciberseguridad">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">Ciberseguridad</span>
-              </div>
-              <span class="badge badge-metric">VPN</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">Ciberseguridad</span></div><span class="badge badge-metric">VPN</span></div>
             <h3 class="project-title">VPNForge</h3>
-            <p class="project-desc">Implementacion y configuracion de soluciones VPN seguras con WireGuard y OpenVPN. Script de despliegue automatizado y gestion de certificados.</p>
-            <div class="project-tech">
-              <span class="tech-tag">WireGuard</span>
-              <span class="tech-tag">OpenVPN</span>
-              <span class="tech-tag">Linux</span>
-              <span class="tech-tag">Bash</span>
-            </div>
+            <p class="project-desc">Implementación y configuración de soluciones VPN seguras con WireGuard y OpenVPN. Script de despliegue automatizado y gestión de certificados.</p>
+            <div class="project-tech"><span class="tech-tag">WireGuard</span><span class="tech-tag">OpenVPN</span><span class="tech-tag">Linux</span><span class="tech-tag">Bash</span></div>
           </div>
         </div>
-
         <div class="project-card reveal" data-category="ia">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">IA</span>
-              </div>
-              <span class="badge badge-metric">Datos</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">IA</span></div><span class="badge badge-metric">Datos</span></div>
             <h3 class="project-title">InvimaRS</h3>
-            <p class="project-desc">Sistema de recomendacion basado en IA para analisis de registros sanitarios. Procesamiento de datos y prediccion de patrones de comportamiento.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Pandas</span>
-              <span class="tech-tag">Scikit-learn</span>
-              <span class="tech-tag">Streamlit</span>
-            </div>
+            <p class="project-desc">Sistema de recomendación basado en IA para análisis de registros sanitarios. Procesamiento de datos y predicción de patrones de comportamiento.</p>
+            <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Pandas</span><span class="tech-tag">Scikit-learn</span><span class="tech-tag">Streamlit</span></div>
           </div>
         </div>
-
         <div class="project-card reveal" data-category="ia">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">IA</span>
-              </div>
-              <span class="badge badge-metric">Audio</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">IA</span></div><span class="badge badge-metric">Audio</span></div>
             <h3 class="project-title">AudioIA</h3>
-            <p class="project-desc">Aplicacion de procesamiento de audio con inteligencia artificial para transcripcion, clasificacion y analisis automatizado de contenido de audio.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Whisper</span>
-              <span class="tech-tag">NLTK</span>
-              <span class="tech-tag">Flask</span>
-            </div>
+            <p class="project-desc">Aplicación de procesamiento de audio con inteligencia artificial para transcripción, clasificación y análisis automatizado de contenido de audio.</p>
+            <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Whisper</span><span class="tech-tag">NLTK</span><span class="tech-tag">Flask</span></div>
           </div>
-        </div>
-
-        <div class="project-card reveal" data-category="ia">
+        </div>        <div class="project-card reveal" data-category="ia">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">IA</span>
-              </div>
-              <span class="badge badge-metric">ML</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">IA</span></div><span class="badge badge-metric">ML</span></div>
             <h3 class="project-title">Resurge</h3>
-            <p class="project-desc">Modelo de machine learning para prediccion y analisis de datos. Pipeline completo de entrenamiento, validacion y despliegue de modelos.</p>
-            <div class="project-tech">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">TensorFlow</span>
-              <span class="tech-tag">Keras</span>
-              <span class="tech-tag">Jupyter</span>
-            </div>
+            <p class="project-desc">Modelo de machine learning para predicción y análisis de datos. Pipeline completo de entrenamiento, validación y despliegue de modelos.</p>
+            <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">TensorFlow</span><span class="tech-tag">Keras</span><span class="tech-tag">Jupyter</span></div>
           </div>
         </div>
-
         <div class="project-card reveal" data-category="web">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">Web</span>
-              </div>
-              <span class="badge badge-metric">E-commerce</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">Web</span></div><span class="badge badge-metric">E-commerce</span></div>
             <h3 class="project-title">ColorCafe</h3>
-            <p class="project-desc">Plataforma web para cafeteria con sistema de pedidos en linea, catalogo de productos y panel de administracion. Diseno responsivo y moderno.</p>
-            <div class="project-tech">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Node.js</span>
-              <span class="tech-tag">MongoDB</span>
-              <span class="tech-tag">CSS</span>
-            </div>
+            <p class="project-desc">Plataforma web para cafetería con sistema de pedidos en línea, catálogo de productos y panel de administración. Diseño responsivo y moderno.</p>
+            <div class="project-tech"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span><span class="tech-tag">CSS</span></div>
           </div>
         </div>
-
         <div class="project-card reveal" data-category="web">
           <div class="project-card-top"></div>
           <div class="project-card-inner">
-            <div class="project-header">
-              <div class="project-badges">
-                <span class="badge badge-cat">Web</span>
-              </div>
-              <span class="badge badge-metric">Tienda</span>
-            </div>
+            <div class="project-header"><div class="project-badges"><span class="badge badge-cat">Web</span></div><span class="badge badge-metric">Tienda</span></div>
             <h3 class="project-title">FinalStore</h3>
-            <p class="project-desc">Tienda en linea con carrito de compras, pasarela de pagos y gestion de inventario. Arquitectura fullstack con autenticacion de usuarios.</p>
-            <div class="project-tech">
-              <span class="tech-tag">JavaScript</span>
-              <span class="tech-tag">Express</span>
-              <span class="tech-tag">SQL</span>
-              <span class="tech-tag">HTML/CSS</span>
-            </div>
+            <p class="project-desc">Tienda en línea con carrito de compras, pasarela de pagos y gestión de inventario. Arquitectura fullstack con autenticación de usuarios.</p>
+            <div class="project-tech"><span class="tech-tag">JavaScript</span><span class="tech-tag">Express</span><span class="tech-tag">SQL</span><span class="tech-tag">HTML/CSS</span></div>
           </div>
         </div>
-
       </div>
     </div>
-  </section>
-
-  <section id="certs" class="certs-section">
+  </section>  <section id="certs" class="certs-section">
     <div class="container">
       <div class="reveal">
-        <span class="section-label">// Certificaciones & Educacion</span>
-        <h2 class="section-title">Formacion academica</h2>
+        <span class="section-label">// Certificaciones & Educación</span>
+        <h2 class="section-title">Formación académica</h2>
       </div>
       <div class="certs-grid">
         <div class="cert-card reveal">
-          <div class="cert-icon">ðŸ›¡ï¸</div>
-          <div class="cert-info">
-            <div class="cert-name">Google Cybersecurity Professional Certificate</div>
-            <div class="cert-date">Agosto 2024</div>
-          </div>
+          <div class="cert-icon">★</div>
+          <div class="cert-info"><div class="cert-name">Google Cybersecurity Professional Certificate</div><div class="cert-date">Agosto 2024</div></div>
         </div>
         <div class="cert-card reveal reveal-delay-1">
-          <div class="cert-icon">ðŸ”</div>
-          <div class="cert-info">
-            <div class="cert-name">Cisco Cybersecurity Essentials</div>
-            <div class="cert-date">2025</div>
-          </div>
+          <div class="cert-icon">⊕</div>
+          <div class="cert-info"><div class="cert-name">Cisco Cybersecurity Essentials</div><div class="cert-date">2025</div></div>
         </div>
         <div class="cert-card reveal reveal-delay-2">
-          <div class="cert-icon">ðŸ“Š</div>
-          <div class="cert-info">
-            <div class="cert-name">Analisis de Datos â€” MinTIC</div>
-            <div class="cert-date">2023</div>
-          </div>
+          <div class="cert-icon">▣</div>
+          <div class="cert-info"><div class="cert-name">Análisis de Datos — MinTIC</div><div class="cert-date">2023</div></div>
         </div>
         <div class="cert-card reveal reveal-delay-3">
-          <div class="cert-icon">ðŸŽ“</div>
-          <div class="cert-info">
-            <div class="cert-name">Mision TIC 2022</div>
-            <div class="cert-date">2022</div>
-          </div>
+          <div class="cert-icon">◆</div>
+          <div class="cert-info"><div class="cert-name">Misión TIC 2022</div><div class="cert-date">2022</div></div>
         </div>
         <div class="cert-card reveal">
-          <div class="cert-icon">ðŸ’»</div>
-          <div class="cert-info">
-            <div class="cert-name">Diplomado Desarrollo Web â€” Universidad Nacional</div>
-            <div class="cert-date">2021</div>
-          </div>
+          <div class="cert-icon">◊</div>
+          <div class="cert-info"><div class="cert-name">Diplomado Desarrollo Web — Universidad Nacional</div><div class="cert-date">2021</div></div>
         </div>
       </div>
       <div class="edu">
         <div class="edu-item reveal">
-          <div class="edu-icon">ðŸ›ï¸</div>
+          <div class="edu-icon">◕</div>
           <div class="edu-info">
-            <div class="edu-name">Ingenieria de Sistemas</div>
-            <div class="edu-detail">Universidad Distrital â€” 2021 â€” 2027</div>
+            <div class="edu-name">Ingeniería de Sistemas</div>
+            <div class="edu-detail">Universidad Distrital — 2021 — 2027</div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <section id="contact">
+  </section>  <section id="contact">
     <div class="container">
       <div class="reveal">
         <span class="section-label">// Contacto</span>
         <h2 class="section-title">Trabajemos juntos</h2>
-        <p class="section-subtitle">Abierto a oportunidades de colaboracion, proyectos freelance y roles en ciberseguridad.</p>
+        <p class="section-subtitle">Abierto a oportunidades de colaboración, proyectos freelance y roles en ciberseguridad.</p>
       </div>
       <div class="contact-grid">
         <a href="https://github.com/Dacr2153" target="_blank" rel="noopener noreferrer" class="contact-card reveal">
-          <div class="contact-icon">âŒ¨ï¸</div>
-          <div>
-            <div class="contact-label">GitHub</div>
-            <div class="contact-value">Dacr2153</div>
-          </div>
+          <div class="contact-icon">{ }</div>
+          <div><div class="contact-label">GitHub</div><div class="contact-value">Dacr2153</div></div>
         </a>
         <a href="https://linkedin.com/in/TU-USUARIO" target="_blank" rel="noopener noreferrer" class="contact-card reveal reveal-delay-1">
-          <div class="contact-icon">ðŸ’¼</div>
-          <div>
-            <div class="contact-label">LinkedIn</div>
-            <div class="contact-value">TU-USUARIO</div>
-          </div>
+          <div class="contact-icon">in</div>
+          <div><div class="contact-label">LinkedIn</div><div class="contact-value">TU-USUARIO</div></div>
         </a>
         <a href="mailto:daacolorador@gmail.com" class="contact-card reveal reveal-delay-2">
-          <div class="contact-icon">âœ‰ï¸</div>
-          <div>
-            <div class="contact-label">Email</div>
-            <div class="contact-value">daacolorador@gmail.com</div>
-          </div>
+          <div class="contact-icon">@</div>
+          <div><div class="contact-label">Email</div><div class="contact-value">daacolorador@gmail.com</div></div>
         </a>
         <a href="mailto:DaCr2153@proton.me" class="contact-card reveal reveal-delay-3">
-          <div class="contact-icon">ðŸ”’</div>
-          <div>
-            <div class="contact-label">ProtonMail</div>
-            <div class="contact-value">DaCr2153@proton.me</div>
-          </div>
+          <div class="contact-icon">◉</div>
+          <div><div class="contact-label">ProtonMail</div><div class="contact-value">DaCr2153@proton.me</div></div>
         </a>
         <a href="CV_2026.pdf" target="_blank" rel="noopener noreferrer" class="contact-card reveal">
-          <div class="contact-icon">ðŸ“„</div>
-          <div>
-            <div class="contact-label">Curriculum</div>
-            <div class="contact-value">CV_2026.pdf</div>
-          </div>
+          <div class="contact-icon">≈</div>
+          <div><div class="contact-label">Curriculum</div><div class="contact-value">CV_2026.pdf</div></div>
         </a>
       </div>
     </div>
   </section>
-
   <footer class="footer">
     <div class="footer-content">
-      <div class="footer-text">&copy; 2026 David Alexander Colorado Rodriguez. Todos los derechos reservados.</div>
+      <div class="footer-text">© 2026 David Alexander Colorado Rodriguez. Todos los derechos reservados.</div>
       <div class="footer-links">
         <a href="terminal.html">Version Terminal</a>
         <a href="#hero">Volver arriba</a>
       </div>
     </div>
-  </footer>
-
-  <script>
+  </footer>  <script>
     (function(){
       var isTouch='ontouchstart'in window||navigator.maxTouchPoints>0;
       var dot=document.getElementById('cursorDot');
       var ring=document.getElementById('cursorRing');
       var mx=0,my=0,dx=0,dy=0,rx=0,ry=0;
-
       if(!isTouch&&dot&&ring){
         document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
         function lerp(a,b,t){return a+(b-a)*t}
         (function animCursor(){
-          dx=lerp(dx,mx,.15);
-          dy=lerp(dy,my,.15);
-          rx=lerp(rx,mx,.08);
-          ry=lerp(ry,my,.08);
+          dx=lerp(dx,mx,.15);dy=lerp(dy,my,.15);
+          rx=lerp(rx,mx,.08);ry=lerp(ry,my,.08);
           dot.style.left=dx+'px';dot.style.top=dy+'px';
           ring.style.left=rx+'px';ring.style.top=ry+'px';
           requestAnimationFrame(animCursor);
@@ -741,7 +542,6 @@
           el.addEventListener('mouseleave',function(){dot.classList.remove('hover');ring.classList.remove('hover')});
         });
       }
-
       var progressBar=document.getElementById('scrollProgress');
       var nav=document.getElementById('nav');
       window.addEventListener('scroll',function(){
@@ -751,38 +551,27 @@
         progressBar.style.width=scrollPercent+'%';
         if(scrollTop>50){nav.classList.add('scrolled')}else{nav.classList.remove('scrolled')}
       });
-
       var navLinks=document.querySelectorAll('.nav-links a');
       var sections=document.querySelectorAll('section[id]');
       function updateActiveNav(){
         var scrollPos=window.pageYOffset+150;
         sections.forEach(function(section){
-          var top=section.offsetTop;
-          var height=section.offsetHeight;
-          var id=section.getAttribute('id');
+          var top=section.offsetTop;var height=section.offsetHeight;var id=section.getAttribute('id');
           if(scrollPos>=top&&scrollPos<top+height){
-            navLinks.forEach(function(link){
-              link.classList.remove('active');
-              if(link.getAttribute('href')==='#'+id){link.classList.add('active')}
-            });
+            navLinks.forEach(function(link){link.classList.remove('active');if(link.getAttribute('href')==='#'+id){link.classList.add('active')}});
           }
         });
       }
-      window.addEventListener('scroll',updateActiveNav);
-
-      var navToggle=document.getElementById('navToggle');
+      window.addEventListener('scroll',updateActiveNav);      var navToggle=document.getElementById('navToggle');
       var navLinksContainer=document.getElementById('navLinks');
       navToggle.addEventListener('click',function(){
-        navToggle.classList.toggle('open');
-        navLinksContainer.classList.toggle('open');
+        navToggle.classList.toggle('open');navLinksContainer.classList.toggle('open');
       });
       navLinksContainer.querySelectorAll('a').forEach(function(link){
         link.addEventListener('click',function(){
-          navToggle.classList.remove('open');
-          navLinksContainer.classList.remove('open');
+          navToggle.classList.remove('open');navLinksContainer.classList.remove('open');
         });
       });
-
       var reveals=document.querySelectorAll('.reveal');
       var revealObserver=new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
@@ -790,7 +579,6 @@
         });
       },{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
       reveals.forEach(function(el){revealObserver.observe(el)});
-
       var statNumbers=document.querySelectorAll('.stat-number');
       var countersStarted=false;
       var counterObserver=new IntersectionObserver(function(entries){
@@ -800,8 +588,7 @@
             statNumbers.forEach(function(el){
               var target=parseInt(el.getAttribute('data-target'));
               var suffix=el.getAttribute('data-suffix')||'';
-              var duration=2000;
-              var startTime=null;
+              var duration=2000;var startTime=null;
               function animateCounter(timestamp){
                 if(!startTime)startTime=timestamp;
                 var progress=Math.min((timestamp-startTime)/duration,1);
@@ -815,9 +602,7 @@
           }
         });
       },{threshold:0.5});
-      if(statNumbers.length>0){counterObserver.observe(statNumbers[0].closest('.stats-grid'))}
-
-      var filterBtns=document.querySelectorAll('.filter-btn');
+      if(statNumbers.length>0){counterObserver.observe(statNumbers[0].closest('.stats-grid'))}      var filterBtns=document.querySelectorAll('.filter-btn');
       var projectCards=document.querySelectorAll('.project-card');
       filterBtns.forEach(function(btn){
         btn.addEventListener('click',function(){
@@ -826,39 +611,29 @@
           var filter=btn.getAttribute('data-filter');
           projectCards.forEach(function(card){
             if(filter==='all'||card.getAttribute('data-category')===filter){
-              card.classList.remove('hidden');
-              card.style.display='';
-            }else{
-              card.classList.add('hidden');
-              card.style.display='none';
-            }
+              card.classList.remove('hidden');card.style.display='';
+            }else{card.classList.add('hidden');card.style.display='none';}
           });
         });
       });
-
       projectCards.forEach(function(card){
         card.addEventListener('mousemove',function(e){
           var rect=card.getBoundingClientRect();
-          var x=e.clientX-rect.left;
-          var y=e.clientY-rect.top;
-          var centerX=rect.width/2;
-          var centerY=rect.height/2;
-          var rotateX=(y-centerY)/centerY*-5;
-          var rotateY=(x-centerX)/centerX*5;
+          var x=e.clientX-rect.left;var y=e.clientY-rect.top;
+          var centerX=rect.width/2;var centerY=rect.height/2;
+          var rotateX=(y-centerY)/centerY*-5;var rotateY=(x-centerX)/centerX*5;
           card.style.transform='perspective(1000px) rotateX('+rotateX+'deg) rotateY('+rotateY+'deg) scale(1.02)';
         });
         card.addEventListener('mouseleave',function(){
           card.style.transform='perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
         });
       });
-
       var magneticBtns=document.querySelectorAll('.btn');
       if(!isTouch){
         magneticBtns.forEach(function(btn){
           btn.addEventListener('mousemove',function(e){
             var rect=btn.getBoundingClientRect();
-            var x=e.clientX-rect.left-rect.width/2;
-            var y=e.clientY-rect.top-rect.height/2;
+            var x=e.clientX-rect.left-rect.width/2;var y=e.clientY-rect.top-rect.height/2;
             var content=btn.querySelector('.magnetic-content');
             if(content){content.style.transform='translate('+x*.3+'px,'+y*.3+'px)'}
           });
@@ -868,15 +643,11 @@
           });
         });
       }
-
       document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
         anchor.addEventListener('click',function(e){
           e.preventDefault();
           var target=document.querySelector(this.getAttribute('href'));
-          if(target){
-            var offsetTop=target.offsetTop-80;
-            window.scrollTo({top:offsetTop,behavior:'smooth'});
-          }
+          if(target){var offsetTop=target.offsetTop-80;window.scrollTo({top:offsetTop,behavior:'smooth'});}
         });
       });
     })();
