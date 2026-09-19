@@ -109,6 +109,9 @@ class PortfolioTerminal {
         this.input.value = '';
         this.updateCursor();
       }
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      this.autocomplete();
     } else if (e.key === 'l' && e.ctrlKey) {
       e.preventDefault();
       this.clear();
@@ -146,6 +149,12 @@ class PortfolioTerminal {
       echo:    () => this.cmdEcho(args),
       date:    () => this.cmdDate(),
       uptime:  () => this.cmdUptime(),
+      man:     () => this.cmdMan(args),
+      sudo:    () => this.cmdSudo(args),
+      nmap:    () => this.cmdNmap(args),
+      exploit: () => this.cmdExploit(),
+      ping:    () => this.cmdPing(args),
+      curl:    () => this.cmdCurl(args),
     };
 
     if (commands[cmd]) {
@@ -191,7 +200,7 @@ class PortfolioTerminal {
     const cmds = [
       ['help',         'Mostrar esta ayuda'],
       ['whoami',       'Información personal'],
-      ['skills',       'Habilidades y niveles'],
+      ['skills',       'Habilidades y tecnologías'],
       ['ls [carpeta]', 'Listar proyectos (ciberseguridad|ia|appweb)'],
       ['tree',         'Ver árbol completo de proyectos'],
       ['projects',     'Listar todos los proyectos'],
@@ -199,11 +208,19 @@ class PortfolioTerminal {
       ['tech',         'Stack tecnológico'],
       ['contact',      'Canales de contacto'],
       ['cat <archivo>','Leer archivos del sistema'],
+      ['man <cmd>',    'Manual de un comando'],
+      ['nmap <target>','Simular escaneo de red'],
+      ['exploit',      'Herramientas de seguridad'],
+      ['ping <host>',  'Test de conectividad'],
+      ['curl <url>',   'Consultar API del portafolio'],
+      ['sudo <cmd>',   'Ejecutar con privilegios'],
       ['neofetch',     'Info del sistema'],
       ['history',      'Historial de comandos'],
       ['clear',        'Limpiar terminal'],
       ['date',         'Fecha y hora actual'],
       ['uptime',       'Tiempo activo'],
+      ['Tab',          'Autocompletar comando'],
+      ['?',            'Atajos de teclado'],
     ];
     this.printLine('');
     this.printLine('  Comandos disponibles:', 'help-header');
@@ -218,10 +235,10 @@ class PortfolioTerminal {
     this.printLine('');
     this.printLine('  ┌─────────────────────────────────────────────────────┐', 'cyan');
     this.printLine('  │  David Alexander Colorado Rodríguez                 │', 'cyan');
-    this.printLine('  │  Ingeniero de Sistemas — Especialista en CiberSeg   │', 'cyan');
+    this.printLine('  │  Ingeniero de Sistemas en Formación — Ciberseg Jr  │', 'cyan');
     this.printLine('  └─────────────────────────────────────────────────────┘', 'cyan');
     this.printLine('');
-    this.printLine('  Experiencia: 3+ años freelance (2022 - 2026)', 'highlight');
+    this.printLine('  Experiencia: 3 años freelance (2022 - 2026)', 'highlight');
     this.printLine('  Ubicación:   Bogotá, Colombia');
     this.printLine('  Educación:   Ing. de Sistemas — Universidad Distrital');
     this.printLine('');
@@ -231,7 +248,7 @@ class PortfolioTerminal {
     this.printLine('  └── Análisis de Datos — MinTIC (2023)');
     this.printLine('');
     this.printLine('  Especializado en:', 'highlight');
-    this.printLine('  ├── CiberSeguridad (ofensiva y defensiva)');
+    this.printLine('  Ciberseguridad (ofensiva y defensiva)');
     this.printLine('  ├── Agentes de IA aplicados a seguridad');
     this.printLine('  ├── Automatización de procesos');
     this.printLine('  ├── Seguridad en la nube (AWS)');
@@ -242,36 +259,19 @@ class PortfolioTerminal {
     this.printLine('   análisis de vulnerabilidades."', 'dim');
     this.printLine('');
   }
-
   cmdSkills() {
-    const skills = [
-      { name: 'CiberSeguridad',     pct: 90, color: 'green' },
-      { name: 'IA / Automatización', pct: 85, color: 'magenta' },
-      { name: 'Desarrollo Web',     pct: 85, color: 'blue' },
-      { name: 'Cloud Security',     pct: 75, color: 'cyan' },
-      { name: 'Redes / Protocolos', pct: 80, color: 'yellow' },
-      { name: 'Python',             pct: 90, color: 'yellow' },
-      { name: 'Rust',               pct: 80, color: 'green' },
-      { name: 'Bash / Shell',       pct: 85, color: 'cyan' },
-    ];
     this.printLine('');
-    this.printLine('  Habilidades:', 'highlight');
+    this.printLine('  Stack Tecnológico:', 'highlight');
     this.printLine('');
-    skills.forEach(s => {
-      const filled = Math.round(s.pct / 5);
-      const empty = 20 - filled;
-      const bar = '█'.repeat(filled) + '░'.repeat(empty);
-      this.printHTML(`  <span class="term-skill-name">${s.name.padEnd(20)}</span><span class="term-bar-${s.color}">${bar}</span> <span class="term-pct">${s.pct}%</span>`);
-    });
-    this.printLine('');
-    this.printLine('  Herramientas de Seguridad:', 'highlight');
-    this.printLine('  Metasploit · Burp Suite · Nmap · Wireshark · Nessus · John the Ripper · SQLmap');
-    this.printLine('');
-    this.printLine('  SIEM y Monitoreo:', 'highlight');
-    this.printLine('  Splunk · Nagios');
-    this.printLine('');
-    this.printLine('  Metodologías:', 'highlight');
-    this.printLine('  NIST · ISO 27001 · Red Team / Blue Team · PTES');
+    this.printLine('  Languages:    Python · Rust · Bash · Java · JavaScript');
+    this.printLine('  Frontend:     React · HTML5 · CSS');
+    this.printLine('  Backend:      Node.js · FastAPI');
+    this.printLine('  AI/ML:        Agentes multiagente · Detección phishing · Ollama · Gemini');
+    this.printLine('  Cloud:        AWS (básico) · Docker · GitHub Actions');
+    this.printLine('  Security:     Nmap · Metasploit · Burp Suite · Wireshark · John the Ripper');
+    this.printLine('  Databases:    PostgreSQL · MySQL · MongoDB');
+    this.printLine('  SO:           Kali · Parrot · Ubuntu · ArchLinux');
+    this.printLine('  Concepts:     NIST CSF · ISO 27001 · Red Team / Blue Team');
     this.printLine('');
   }
 
@@ -392,14 +392,14 @@ class PortfolioTerminal {
 
   cmdTech() {
     const stack = {
-      'Languages':   ['Python', 'Rust', 'Bash', 'Java', 'JavaScript', 'C++'],
-      'Frontend':    ['React', 'Vue.js', 'Angular', 'HTML5', 'CSS'],
-      'Backend':     ['Node.js', 'FastAPI', 'Express'],
-      'AI/ML':       ['Multiagente', 'Detección phishing', 'Gemini', 'Ollama'],
-      'Cloud':       ['AWS', 'Docker', 'GitHub Actions'],
-      'Security':    ['Metasploit', 'Burp Suite', 'Nmap', 'Wireshark', 'Nessus', 'SQLmap'],
+      'Languages':   ['Python', 'Rust', 'Bash', 'Java', 'JavaScript'],
+      'Frontend':    ['React', 'HTML5', 'CSS'],
+      'Backend':     ['Node.js', 'FastAPI'],
+      'AI/ML':       ['Agentes multiagente', 'Detección phishing', 'Gemini', 'Ollama'],
+      'Cloud':       ['AWS (básico)', 'Docker', 'GitHub Actions'],
+      'Security':    ['Nmap', 'Metasploit', 'Burp Suite', 'Wireshark', 'John the Ripper'],
       'Databases':   ['PostgreSQL', 'MySQL', 'MongoDB'],
-      'SO':          ['ArchLinux', 'Kali', 'Parrot', 'Ubuntu', 'Windows Server'],
+      'SO':          ['Kali', 'Parrot', 'Ubuntu', 'ArchLinux'],
     };
     this.printLine('');
     this.printLine('  Stack Tecnológico:', 'highlight');
@@ -415,11 +415,11 @@ class PortfolioTerminal {
     this.printLine('  Canales de contacto:', 'highlight');
     this.printLine('');
     this.printHTML('  <span class="term-cyan">{ }</span>  GitHub      <span class="term-dim">→</span>  <span class="term-link">github.com/DaCr2153</span>');
-    this.printHTML('  <span class="term-yellow">✉</span>   WhatsApp   <span class="term-dim">→</span>  <span class="term-link">+57 322 387 1744</span>');
-    this.printHTML('  <span class="term-green">@</span>   Email       <span class="term-dim">→</span>  <span class="term-link">daacolorador@gmail.com</span>');
-    this.printHTML('  <span class="term-green">🔒</span>   ProtonMail <span class="term-dim">→</span>  <span class="term-link">DaCr2153@proton.me</span>');
+    this.printHTML('  <span class="term-blue">in</span>  LinkedIn    <span class="term-dim">→</span>  <span class="term-link">linkedin.com/in/TU-USUARIO</span>');
+    this.printHTML('  <span class="term-green">@</span>   Correo      <span class="term-dim">→</span>  <span class="term-link">daacolorador@gmail.com</span>');
+    this.printHTML('  <span class="term-green">🔒</span>   Correo Seg  <span class="term-dim">→</span>  <span class="term-link">DaCr2153@proton.me</span>');
     this.printLine('');
-    this.printLine('  También puedes usar los botones en la sección "contacto".', 'dim');
+    this.printLine('  También puedes encontrar los enlaces en la sección "contacto".', 'dim');
     this.printLine('');
   }
 
@@ -433,12 +433,12 @@ class PortfolioTerminal {
         this.printLine('');
         this.printLine('  # Portafolio Terminal UI — David Colorado', 'highlight');
         this.printLine('');
-        this.printLine('  Especialista en CiberSeguridad, Automatización y Seguridad en la Nube.');
-        this.printLine('  3+ años de experiencia freelance desarrollando automatizaciones,');
-        this.printLine('  arquitecturas multiagente y herramientas de seguridad.');
+        this.printLine('  Ciberseguridad Junior, automatización y desarrollo de aplicaciones.');
+        this.printLine('  3 años de experiencia freelance desarrollando herramientas de');
+        this.printLine('  seguridad, automatización y agentes de IA para clientes empresariales.');
         this.printLine('');
         this.printLine('  10 proyectos en 3 dominios:', 'highlight');
-        this.printLine('  ├── CiberSeguridad (5 proyectos)');
+        this.printLine('  ├── Ciberseguridad (5 proyectos)');
         this.printLine('  ├── Inteligencia Artificial (3 proyectos)');
         this.printLine('  └── Aplicaciones Web (2 proyectos)');
         this.printLine('');
@@ -454,7 +454,7 @@ class PortfolioTerminal {
         this.printLine('');
         this.printLine('  ╔════════════════════════════════════════════════════╗', 'yellow');
         this.printLine('  ║  Bienvenido al portafolio de David Colorado       ║', 'yellow');
-        this.printLine('  ║  Especialista en CiberSeguridad y Automatización  ║', 'yellow');
+        this.printLine('  ║  Ciberseguridad Junior y Automatización           ║', 'yellow');
         this.printLine('  ║  Explora mis proyectos con los comandos           ║', 'yellow');
         this.printLine('  ║  o navega usando las pestañas de arriba.          ║', 'yellow');
         this.printLine('  ╚════════════════════════════════════════════════════╝', 'yellow');
@@ -465,29 +465,29 @@ class PortfolioTerminal {
         this.printLine('  ── RESUMEN PROFESIONAL ──────────────────────────────', 'highlight');
         this.printLine('');
         this.printLine('  David Alexander Colorado Rodríguez');
-        this.printLine('  Ingeniero de Sistemas — Especialista en Ciberseguridad');
-        this.printLine('  Bogotá, Colombia | +57 322 387 1744');
+        this.printLine('  Ingeniero de Sistemas en Formación — Ciberseguridad Junior');
+        this.printLine('  Bogotá, Colombia');
         this.printLine('  daacolorador@gmail.com | DaCr2153@proton.me');
         this.printLine('');
         this.printLine('  PERFIL:', 'highlight');
-        this.printLine('  Especialista en Ciberseguridad con 3 años de experiencia');
-        this.printLine('  freelance desarrollando automatizaciones, arquitecturas');
-        this.printLine('  multiagente y herramientas de seguridad.');
+        this.printLine('  Ciberseguridad Junior con 3 años de experiencia');
+        this.printLine('  freelance desarrollando automatizaciones, herramientas');
+        this.printLine('  de seguridad y agentes de IA para clientes empresariales.');
         this.printLine('');
         this.printLine('  EXPERIENCIA:', 'highlight');
         this.printLine('  ├── Desarrollador Freelance (2022-2026)');
-        this.printLine('  │   Automatización, IA y Seguridad');
+        this.printLine('  │   Ciberseguridad, Automatización y Seguridad');
         this.printLine('  ├── Instructor de Seguridad Informática (2023-2025)');
         this.printLine('  │   GISAC - ACM Chapter, Universidad Distrital');
         this.printLine('  └── Instructor de Linux (2024)');
         this.printLine('      GIOS - ACM Chapter, Universidad Distrital');
         this.printLine('');
         this.printLine('  EDUCACIÓN:', 'highlight');
-        this.printLine('  ├── Ingeniería de Sistemas (en proceso de tesis)');
+        this.printLine('  ├── Ingeniería de Sistemas (2021-2027, tesis en proceso)');
         this.printLine('  │   Universidad Distrital Francisco José de Caldas');
-        this.printLine('  ├── Diplomado en Desarrollo de Aplicaciones Web');
+        this.printLine('  ├── Diplomado en Desarrollo de Aplicaciones Web (2021)');
         this.printLine('  │   Universidad Nacional de Colombia');
-        this.printLine('  └── Programa Misión TIC 2022');
+        this.printLine('  └── Misión TIC 2022 (Ciclos 1, 2, 3 y 4a)');
         this.printLine('');
         this.printLine('  CERTIFICACIONES:', 'highlight');
         this.printLine('  ├── Google Cybersecurity Professional Certificate (2024)');
@@ -515,23 +515,23 @@ class PortfolioTerminal {
   cmdNeofetch() {
     this.printLine('');
     this.printLine('        .--.        David Colorado', 'green');
-    this.printLine('       |o_o |       Ingeniero de Sistemas', 'green');
+    this.printLine('       |o_o |       Ingeniero de Sistemas en Formación', 'green');
     this.printLine('       |:_/ |       ─────────────────────', 'dim');
     this.printLine('      //   \\ \\      OS: PortfolioOS 2.0 (Linux)', 'dim');
     this.printLine('     (|     | )     Host: GitHub Pages', 'dim');
     this.printLine("    /'\\_   _/`\\     Shell: zsh 5.9", 'dim');
     this.printLine('    \\___)=(___/     Terminal: Portfolio-TUI v1.0', 'dim');
     this.printLine('');
-    this.printLine('  Experiencia:  3+ años freelance (2022-2026)', 'dim');
+    this.printLine('  Experiencia:  3 años freelance (2022-2026)', 'dim');
     this.printLine('  Educación:    Ing. Sistemas — Universidad Distrital', 'dim');
     this.printLine('  Certs:        Google Cybersecurity · Cisco · MinTIC', 'dim');
     this.printLine('');
-    this.printLine('  Languages:   Python · Rust · Bash · Java · JavaScript · C++', 'dim');
-    this.printLine('  Frontend:    React · Vue.js · Angular', 'dim');
-    this.printLine('  Backend:     Node.js · FastAPI · Express', 'dim');
-    this.printLine('  AI/ML:       Multiagente · Detección phishing · Gemini', 'dim');
-    this.printLine('  Cloud:       AWS · Docker · GitHub Actions', 'dim');
-    this.printLine('  Security:    Metasploit · Burp Suite · Nmap · Wireshark', 'dim');
+    this.printLine('  Languages:   Python · Rust · Bash · Java · JavaScript', 'dim');
+    this.printLine('  Frontend:    React · HTML5 · CSS', 'dim');
+    this.printLine('  Backend:     Node.js · FastAPI', 'dim');
+    this.printLine('  AI/ML:       Agentes multiagente · Detección phishing · Ollama', 'dim');
+    this.printLine('  Cloud:       AWS (básico) · Docker · GitHub Actions', 'dim');
+    this.printLine('  Security:    Nmap · Metasploit · Burp Suite · Wireshark', 'dim');
     this.printLine('  Databases:   PostgreSQL · MySQL · MongoDB', 'dim');
     this.printLine('');
   }
@@ -567,6 +567,153 @@ class PortfolioTerminal {
 
   cmdClear() {
     this.clear();
+  }
+
+  // ── AUTOCOMPLETE ──────────────────────────────────────
+  autocomplete() {
+    const value = this.input.value.trim().toLowerCase();
+    if (!value) return;
+
+    const commands = ['help','whoami','about','skills','ls','tree','projects','project','tech','stack','contact','clear','history','cat','neofetch','echo','date','uptime','man','sudo','nmap','exploit','ping','curl'];
+    const matches = commands.filter(c => c.startsWith(value));
+
+    if (matches.length === 1) {
+      this.input.value = matches[0] + ' ';
+      this.updateCursor();
+    } else if (matches.length > 1) {
+      this.printLine(`$ ${this.input.value}`, 'input-echo');
+      this.printHTML(matches.map(m => `<span class="term-cmd">${m}</span>`).join('  '));
+      this.scrollToBottom();
+    }
+  }
+
+  // ── COMANDOS NUEVOS ──────────────────────────────────
+  cmdMan(args) {
+    const manPages = {
+      'whoami': 'Muestra información personal y profesional.',
+      'skills': 'Lista las habilidades técnicas y tecnologías.',
+      'ls': 'Lista proyectos por categoría: ciberseguridad, ia, appweb.',
+      'projects': 'Muestra todos los proyectos con métricas.',
+      'project': 'Uso: project <nombre> — Detalles de un proyecto específico.',
+      'tech': 'Muestra el stack tecnológico completo.',
+      'contact': 'Muestra canales de contacto disponibles.',
+      'cat': 'Lee archivos del sistema: profile, skills, stack, contact, readme, motd, cv.',
+      'neofetch': 'Información del sistema con ASCII art.',
+      'nmap': 'Simula un escaneo de red (demostración).',
+      'exploit': 'Lista herramientas de seguridad disponibles.',
+      'sudo': 'Ejecuta comando con privilegios elevados (easter egg).',
+      'tree': 'Muestra árbol completo de proyectos.',
+      'clear': 'Limpia la terminal.',
+      'history': 'Muestra historial de comandos.',
+      'man': 'Uso: man <comando> — Muestra manual de un comando.',
+    };
+    if (!args[0]) {
+      this.printLine('Uso: man <comando>', 'error');
+      this.printLine(`Comandos disponibles: ${Object.keys(manPages).join(', ')}`, 'dim');
+      return;
+    }
+    const page = manPages[args[0].toLowerCase()];
+    if (page) {
+      this.printLine('');
+      this.printLine(`  ${args[0].toUpperCase()}(1)                    Portfolio Manual                    ${args[0].toUpperCase()}(1)`, 'highlight');
+      this.printLine('');
+      this.printLine(`  NOMBRE`, 'highlight');
+      this.printLine(`      ${args[0]} - ${page}`);
+      this.printLine('');
+    } else {
+      this.printLine(`man: no hay entrada para '${args[0]}'`, 'error');
+    }
+  }
+
+  cmdSudo(args) {
+    if (args.length === 0) {
+      this.printLine('usage: sudo <command>', 'error');
+      return;
+    }
+    this.printLine('');
+    this.printLine('  [sudo] password for david: ********', 'dim');
+    this.printLine('');
+    this.printLine('  ✓ Acceso concedido. Bienvenido, Administrador.', 'green');
+    this.printLine('  "Con gran poder viene gran responsabilidad."', 'dim');
+    this.printLine('');
+  }
+
+  cmdNmap(args) {
+    const target = args[0] || 'localhost';
+    this.printLine('');
+    this.printLine(`  Starting Nmap 7.94 ( https://nmap.org )`, 'dim');
+    this.printLine(`  Nmap scan report for ${target}`, 'highlight');
+    this.printLine(`  Host is up (0.0023s latency).`);
+    this.printLine('');
+    this.printLine('  PORT     STATE  SERVICE      VERSION', 'highlight');
+    this.printLine('  22/tcp   open   ssh          OpenSSH 8.9p1');
+    this.printLine('  80/tcp   open   http         nginx 1.18.0');
+    this.printLine('  443/tcp  open   https        nginx 1.18.0');
+    this.printLine('  3306/tcp closed mysql        MySQL 8.0');
+    this.printLine('  8080/tcp open   http-proxy   Portfolio v2.0');
+    this.printLine('');
+    this.printLine('  Nmap done: 1 IP address (1 host up) scanned in 0.42s', 'dim');
+    this.printLine('');
+  }
+
+  cmdExploit() {
+    this.printLine('');
+    this.printLine('  ╔══════════════════════════════════════════════════╗', 'yellow');
+    this.printLine('  ║  Herramientas de Seguridad Disponibles          ║', 'yellow');
+    this.printLine('  ╚══════════════════════════════════════════════════╝', 'yellow');
+    this.printLine('');
+    this.printLine('  RECON:', 'highlight');
+    this.printLine('  ├── Nmap — Network discovery y port scanning');
+    this.printLine('  ├── Wireshark — Network protocol analyzer');
+    this.printLine('  └── Recon-ng — Framework de reconocimiento');
+    this.printLine('');
+    this.printLine('  EXPLOIT:', 'highlight');
+    this.printLine('  ├── Metasploit — Framework de penetration testing');
+    this.printLine('  ├── Burp Suite — Web application security testing');
+    this.printLine('  └── SQLmap — Automated SQL injection');
+    this.printLine('');
+    this.printLine('  POST-EXPLOIT:', 'highlight');
+    this.printLine('  ├── John the Ripper — Password cracking');
+    this.printLine('  ├── Hydra — Brute force attacks');
+    this.printLine('  └── Mimikatz — Credential extraction');
+    this.printLine('');
+    this.printLine('  DEFENSA:', 'highlight');
+    this.printLine('  ├── Nessus — Vulnerability assessment');
+    this.printLine('  ├── Snort — Network intrusion detection');
+    this.printLine('  └── OSSEC — Host-based intrusion detection');
+    this.printLine('');
+  }
+
+  cmdPing(args) {
+    const host = args[0] || 'portfolio.local';
+    this.printLine('');
+    this.printLine(`  PING ${host} (127.0.0.1): 56 data bytes`, 'dim');
+    for (let i = 1; i <= 4; i++) {
+      const time = (Math.random() * 5 + 1).toFixed(3);
+      this.printLine(`  64 bytes from 127.0.0.1: icmp_seq=${i} ttl=64 time=${time} ms`);
+    }
+    this.printLine('');
+    this.printLine(`  --- ${host} ping statistics ---`, 'dim');
+    this.printLine(`  4 packets transmitted, 4 received, 0% packet loss`, 'dim');
+    this.printLine('');
+  }
+
+  cmdCurl(args) {
+    this.printLine('');
+    this.printLine('  HTTP/1.1 200 OK', 'green');
+    this.printLine('  Content-Type: application/json', 'dim');
+    this.printLine('  X-Portfolio-Version: 2.0', 'dim');
+    this.printLine('');
+    this.printLine('  {', 'highlight');
+    this.printLine('    "name": "David Alexander Colorado Rodríguez",');
+    this.printLine('    "role": "Ciberseguridad Junior",');
+    this.printLine('    "status": "available",');
+    this.printLine('    "location": "Bogotá, Colombia",');
+    this.printLine('    "projects": 10,');
+    this.printLine('    "experience": "3 años",');
+    this.printLine('    "open_to_work": true');
+    this.printLine('  }');
+    this.printLine('');
   }
 }
 

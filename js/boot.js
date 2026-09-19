@@ -7,8 +7,8 @@ const BOOT_CONFIG = {
     { text: 'Starting network', delay: 200 },
     { text: 'Loading portfolio.service', delay: 400 },
   ],
-  progressDuration: 800,
-  welcomeDelay: 300,
+  progressDuration: 1200,
+  welcomeDelay: 400,
   postBootDelay: 200,
 };
 
@@ -34,8 +34,21 @@ async function runBootSequence() {
 
   await sleep(200);
   progressEl.classList.add('boot-progress--visible');
-  await sleep(50);
-  progressFill.style.width = '100%';
+
+  // Animated progress with percentage
+  const progressText = document.createElement('div');
+  progressText.style.cssText = 'font-size:11px;color:var(--text-secondary);margin-top:4px;text-align:right;font-family:var(--font-mono);';
+  progressEl.parentNode.insertBefore(progressText, progressEl.nextSibling);
+
+  let progress = 0;
+  const progressInterval = setInterval(() => {
+    progress += Math.random() * 15 + 5;
+    if (progress > 100) progress = 100;
+    progressFill.style.width = progress + '%';
+    progressText.textContent = `[${Math.round(progress)}%]`;
+    if (progress >= 100) clearInterval(progressInterval);
+  }, BOOT_CONFIG.progressDuration / 8);
+
   await sleep(BOOT_CONFIG.progressDuration);
 
   await sleep(100);
@@ -44,14 +57,15 @@ async function runBootSequence() {
 
   await sleep(BOOT_CONFIG.postBootDelay);
 
-  bootEl.style.transition = 'opacity 0.3s ease';
+  bootEl.style.transition = 'opacity 0.4s ease, filter 0.4s ease';
   bootEl.style.opacity = '0';
-  await sleep(300);
+  bootEl.style.filter = 'blur(4px)';
+  await sleep(400);
   bootEl.style.display = 'none';
 
   heroContent.style.display = 'block';
   heroContent.style.opacity = '0';
-  heroContent.style.transition = 'opacity 0.4s ease';
+  heroContent.style.transition = 'opacity 0.5s ease';
   await sleep(50);
   heroContent.style.opacity = '1';
 

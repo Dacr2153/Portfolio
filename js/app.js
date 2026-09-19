@@ -118,4 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadProjects();
   initFilters();
   runBootSequence();
+  initTypewriter();
+  initScrollProgress();
+  initKeyboardShortcuts();
 });

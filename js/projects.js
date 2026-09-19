@@ -49,14 +49,20 @@ function renderProjects(filter) {
       const moreCount = project.technologies.length - 4;
       const moreTag = moreCount > 0 ? `<span class="tech-tag">+${moreCount}</span>` : '';
 
+      // Metrics badges
+      const metricBadges = project.metrics.slice(0, 3).map(m =>
+        `<span class="metric-badge">${m.label}: ${m.value}</span>`
+      ).join('');
+
       entry.innerHTML = `
         <div class="project-entry__left">
           <span class="project-entry__icon">├──</span>
           <span class="project-entry__name">${project.name}/</span>
-          <span class="project-entry__desc">${project.tagline}</span>
         </div>
-        <span class="project-entry__arrow">→</span>
-        <div class="project-entry__tech">${techTags}${moreTag}</div>
+        <div class="project-entry__right">
+          <div class="project-entry__badges">${metricBadges}</div>
+          <div class="project-entry__tech">${techTags}${moreTag}</div>
+        </div>
       `;
 
       entry.addEventListener('click', () => showProjectDetail(project, portfolio));

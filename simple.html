@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>David Colorado — Ingeniero de Sistemas en Formación | Portafolio</title>
+  <meta name="description" content="Portafolio profesional de David Colorado. Ciberseguridad Junior, automatización y desarrollo de aplicaciones. 3 años de experiencia freelance.">
+  <meta name="author" content="David Colorado">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="David Colorado — Ingeniero de Sistemas en Formación">
+  <meta property="og:description" content="Ciberseguridad Junior, automatización y desarrollo. 3 años de experiencia.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://dacr2153.github.io/Portfolio/simple.html">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0a0e14;--bg-card:#111827;--bg-card-hover:#1a2332;
+      --text:#e0e0e0;--dim:#8892a0;--muted:#4a5568;
+      --accent:#61afef;--green:#88c6a0;--red:#e06c75;--purple:#c678dd;--cyan:#6cb4c9;--yellow:#e5c07b;
+      --border:#2a3142;--border-light:#1e2530;
+      --radius:8px;--shadow:0 4px 20px rgba(0,0,0,0.3);
+    }
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:var(--accent);text-decoration:none;transition:color .2s}a:hover{color:var(--green)}
+
+    .container{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+
+    /* Header */
+    .header{text-align:center;padding:4rem 0 3rem;border-bottom:1px solid var(--border)}
+    .header__name{font-size:2.2rem;font-weight:700;color:#fff;margin-bottom:.25rem;letter-spacing:-.02em}
+    .header__role{font-size:1.1rem;color:var(--accent);margin-bottom:1.5rem;font-weight:500}
+    .header__links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .header__link{padding:.5rem 1rem;border:1px solid var(--border);border-radius:var(--radius);color:var(--dim);font-size:.85rem;transition:all .2s}
+    .header__link:hover{border-color:var(--accent);color:var(--accent);background:rgba(97,175,239,.05)}
+
+    /* Section */
+    .section{margin:3rem 0}
+    .section__title{font-size:1.3rem;font-weight:600;color:var(--accent);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem}
+    .section__title-icon{font-size:1.1rem}
+
+    /* Profile */
+    .profile{color:var(--dim);font-size:.95rem;line-height:1.8}
+
+    /* Timeline */
+    .timeline{position:relative;padding-left:2rem}
+    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--purple),var(--green))}
+    .timeline-item{position:relative;margin-bottom:2rem;padding:1.25rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .2s,transform .2s}
+    .timeline-item:hover{border-color:var(--accent);transform:translateX(4px)}
+    .timeline-item::before{content:'';position:absolute;left:-2.35rem;top:1.5rem;width:10px;height:10px;background:var(--accent);border-radius:50%;border:2px solid var(--bg)}
+    .timeline-item__header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.25rem}
+    .timeline-item__role{font-weight:600;color:#fff;font-size:1rem}
+    .timeline-item__date{color:var(--dim);font-size:.85rem}
+    .timeline-item__company{color:var(--cyan);font-size:.9rem;margin-bottom:.75rem}
+    .timeline-item__list{list-style:none;padding:0}
+    .timeline-item__list li{position:relative;padding-left:1.25rem;margin-bottom:.4rem;font-size:.9rem;color:var(--dim)}
+    .timeline-item__list li::before{content:"▸";position:absolute;left:0;color:var(--green)}
+
+    /* Project Grid */
+    .project-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+    @media(min-width:640px){.project-grid{grid-template-columns:1fr 1fr}}
+
+    .project-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:all .25s;position:relative;overflow:hidden}
+    .project-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--shadow)}
+    .project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--green));opacity:0;transition:opacity .2s}
+    .project-card:hover::before{opacity:1}
+    .project-card__title{font-weight:600;color:#fff;margin-bottom:.25rem;font-size:1rem}
+    .project-card__desc{font-size:.85rem;color:var(--dim);margin-bottom:.75rem;line-height:1.5}
+    .project-card__metrics{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+    .project-card__metric{font-size:.7rem;padding:.15rem .4rem;background:rgba(136,198,160,.08);color:var(--green);border-radius:3px;border:1px solid rgba(136,198,160,.15)}
+    .project-card__tech{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.75rem}
+    .tag{font-size:.7rem;padding:.15rem .5rem;background:rgba(97,175,239,.08);color:var(--accent);border-radius:3px;border:1px solid rgba(97,175,239,.15)}
+    .project-card__link{font-size:.85rem;color:var(--green);display:inline-flex;align-items:center;gap:.25rem}
+    .project-card__link:hover{text-decoration:underline}
+
+    /* Category */
+    .category{color:var(--purple);font-size:.85rem;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;display:flex;align-items:center;gap:.5rem}
+    .category::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* Certifications */
+    .cert-list{display:flex;flex-direction:column;gap:.75rem}
+    .cert{display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .2s}
+    .cert:hover{border-color:var(--yellow)}
+    .cert__icon{font-size:1.3rem;flex-shrink:0}
+    .cert__name{font-weight:600;color:#fff;font-size:.95rem}
+    .cert__date{color:var(--dim);font-size:.85rem}
+
+    /* Contact Grid */
+    .contact-grid{display:grid;grid-template-columns:1fr;gap:.75rem}
+    @media(min-width:640px){.contact-grid{grid-template-columns:1fr 1fr}}
+    .contact-item{display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);transition:all .2s}
+    .contact-item:hover{border-color:var(--accent);transform:translateX(4px);text-decoration:none}
+    .contact-item__icon{font-size:1.2rem;width:2rem;text-align:center;flex-shrink:0}
+    .contact-item__label{font-size:.8rem;color:var(--dim)}
+    .contact-item__value{font-size:.9rem;color:#fff;font-weight:500}
+
+    /* Footer */
+    .switch{text-align:center;padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem}
+    .switch a{font-size:.9rem;color:var(--dim);padding:.75rem 1.5rem;border:1px solid var(--border);border-radius:var(--radius);transition:all .2s;display:inline-block}
+    .switch a:hover{border-color:var(--accent);color:var(--accent)}
+    .footer{text-align:center;padding:1.5rem 0;color:var(--muted);font-size:.8rem}
+
+    /* Responsive */
+    @media(max-width:639px){
+      .header__name{font-size:1.6rem}
+      .timeline{padding-left:1.5rem}
+      .timeline-item::before{left:-1.85rem}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <h1 class="header__name">David Alexander Colorado Rodríguez</h1>
+    <p class="header__role">Ingeniero de Sistemas en Formación — Ciberseguridad Junior</p>
+    <div class="header__links">
+      <a href="https://github.com/Dacr2153" target="_blank" rel="noopener" class="header__link">GitHub</a>
+      <a href="https://www.linkedin.com/in/TU-USUARIO" target="_blank" rel="noopener" class="header__link">LinkedIn</a>
+      <a href="mailto:daacolorador@gmail.com" class="header__link">Correo</a>
+      <a href="cv/CV_2026.pdf" target="_blank" rel="noopener" class="header__link">Descargar CV</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2 class="section__title"><span class="section__title-icon">👤</span> Perfil</h2>
+    <p class="profile">Estudiante de Ingeniería de Sistemas (materias completas, tesis en proceso), Ciberseguridad Junior con 3 años de experiencia freelance desarrollando automatizaciones y herramientas de seguridad para 4 clientes empresariales. Certificaciones internacionales (Google Cybersecurity Professional Certificate, Cisco Cybersecurity Essentials). Experiencia práctica en detección de vulnerabilidades, desarrollo de herramientas de protección y automatización de respuesta a incidentes.</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title"><span class="section__title-icon">💼</span> Experiencia</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-item__header">
+          <span class="timeline-item__role">Desarrollador Freelance — Ciberseguridad, Automatización y Seguridad</span>
+          <span class="timeline-item__date">2022 — Presente</span>
+        </div>
+        <div class="timeline-item__company">4 clientes empresariales (confidencial)</div>
+        <ul class="timeline-item__list">
+          <li>Diseñé e implementé herramientas de seguridad (RedOps, CloudSentinel, ForensIQ, DangerZone) para detección de vulnerabilidades y automatización de respuesta a incidentes</li>
+          <li>Detecté fallos y vulnerabilidades en desarrollos empresariales mediante análisis manual, análisis con IA y herramientas especializadas</li>
+          <li>Adapté DangerZone: herramienta de defensa contra contaminación de documentos por phishing y detección de prompt injection</li>
+          <li>Implementé controles básicos de seguridad en servicios AWS (IAM, EC2, S3) para infraestructuras de clientes</li>
+          <li>Automatice procesos de seguridad mediante agentes de IA (1 en producción, 2 en laboratorio)</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-item__header">
+          <span class="timeline-item__role">Instructor de Seguridad Informática</span>
+          <span class="timeline-item__date">2023 — 2025</span>
+        </div>
+        <div class="timeline-item__company">GISAC - ACM Chapter, Universidad Distrital</div>
+        <ul class="timeline-item__list">
+          <li>Diseñé e impartí curso especializado en seguridad informática y hacking ético</li>
+          <li>Entrené prácticamente en distribuciones de seguridad (Kali Linux, Parrot OS)</li>
+          <li>Formé en ingeniería social y concienciación de seguridad</li>
+          <li>Desarrollé laboratorios prácticos simulando escenarios reales de ataque y defensa</li>
+          <li>Capacité a 20-32 estudiantes por ciclo en sesiones de 2h virtuales + 2h presenciales</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-item__header">
+          <span class="timeline-item__role">Instructor de Introducción a Linux</span>
+          <span class="timeline-item__date">2024</span>
+        </div>
+        <div class="timeline-item__company">GIOS - ACM Chapter, Universidad Distrital</div>
+        <ul class="timeline-item__list">
+          <li>Enseñé fundamentos del sistema operativo Linux y administración mediante línea de comandos</li>
+          <li>Desarrollé competencias en shell scripting y automatización</li>
+          <li>Formé en gestión de permisos y seguridad básica en entornos Linux</li>
+          <li>Capacité a 20-32 estudiantes por ciclo en sesiones de 2h virtuales</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title"><span class="section__title-icon">📁</span> Proyectos</h2>
+
+    <p class="category">Ciberseguridad</p>
+    <div class="project-grid" style="margin-bottom:1.5rem">
+      <div class="project-card">
+        <div class="project-card__title">CloudSentinel_ZeroTrust</div>
+        <p class="project-card__desc">SIEM ligero con ML para detección de anomalías en AWS Free Tier. 8 reglas MITRE ATT&CK + Isolation Forest.</p>
+        <div class="project-card__metrics"><span class="project-card__metric">MTTD: &lt;2min</span><span class="project-card__metric">FPR: &lt;0.6%</span><span class="project-card__metric">AUC-ROC: 0.9992</span></div>
+        <div class="project-card__tech"><span class="tag">Python</span><span class="tag">AWS</span><span class="tag">scikit-learn</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/CloudSentinel_ZeroTrust" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-card__title">DangerZone</div>
+        <p class="project-card__desc">Sanitizador de documentos en sandbox aislado. Reescritura completa en Rust con 7 crates.</p>
+        <div class="project-card__tech"><span class="tag">Rust</span><span class="tag">Podman</span><span class="tag">PDFium</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/DangerZone" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-card__title">ForensIQ</div>
+        <p class="project-card__desc">Forensics de memoria y threat hunting con ML. 7 plugins, XGBoost + IsolationForest, 885 tests.</p>
+        <div class="project-card__tech"><span class="tag">Python</span><span class="tag">Volatility 3</span><span class="tag">XGBoost</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/ForensIQ" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-card__title">RedOps_Automatico</div>
+        <p class="project-card__desc">Pentesting automatizado orquestado por LLM local. Pipeline PTES completo con 3 perfiles de evasión.</p>
+        <div class="project-card__tech"><span class="tag">Python</span><span class="tag">Metasploit</span><span class="tag">Ollama</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/RedOps_Automatico" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-card__title">VPNForge</div>
+        <p class="project-card__desc">Suite VPN multi-protocolo (WireGuard, OpenVPN, IPsec). Daemon en Rust con kill switch.</p>
+        <div class="project-card__tech"><span class="tag">Rust</span><span class="tag">Python</span><span class="tag">WireGuard</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/VPN" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+    </div>
+
+    <p class="category">Inteligencia Artificial</p>
+    <div class="project-grid" style="margin-bottom:1.5rem">
+      <div class="project-card">
+        <div class="project-card__title">InvimaRSMolecula</div>
+        <p class="project-card__desc">Agentes IA para registro sanitario de moléculas (INVIMA). Pipeline de 9 pasos, human-in-the-loop.</p>
+        <div class="project-card__tech"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Gemini</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/InvimaRSMolecula" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-card__title">ProcesamientoAudioIA</div>
+        <p class="project-card__desc">Restauración profesional de audio con DSP + neural. 8 presets, wow & flutter correction, 188 tests.</p>
+        <div class="project-card__tech"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">librosa</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/AI_Audio_Processing" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-card__title">ResurgeAgent</div>
+        <p class="project-card__desc">Coordinación inteligente de respuesta a desastres. 20 agentes, pipeline de 11 pasos, red mesh Ed25519.</p>
+        <div class="project-card__tech"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Gemini</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/ResurgeArgent" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+    </div>
+
+    <p class="category">Aplicaciones Web</p>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="project-card__title">ColorCafe</div>
+        <p class="project-card__desc">PWA de análisis de café con visión artificial. Microservicios, CI/CD completo, APK Android.</p>
+        <div class="project-card__tech"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Python</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/ColorCafe" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-card__title">FinalStore</div>
+        <p class="project-card__desc">E-commerce con AI try-on, búsqueda por voz y notificaciones en tiempo real. Backend en Go.</p>
+        <div class="project-card__tech"><span class="tag">Go</span><span class="tag">React</span><span class="tag">TypeScript</span></div>
+        <a class="project-card__link" href="https://github.com/Dacr2153/Store" target="_blank" rel="noopener">Ver en GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title"><span class="section__title-icon">🎓</span> Certificaciones</h2>
+    <div class="cert-list">
+      <div class="cert"><span class="cert__icon">🏆</span><div><div class="cert__name">Google Cybersecurity Professional Certificate</div><div class="cert__date">Agosto 2024</div></div></div>
+      <div class="cert"><span class="cert__icon">🏆</span><div><div class="cert__name">Cisco Cybersecurity Essentials</div><div class="cert__date">2025</div></div></div>
+      <div class="cert"><span class="cert__icon">🏆</span><div><div class="cert__name">Certificación en Análisis de Datos — MinTIC</div><div class="cert__date">2023</div></div></div>
+      <div class="cert"><span class="cert__icon">🎓</span><div><div class="cert__name">Ingeniería de Sistemas — Universidad Distrital</div><div class="cert__date">2021 – 2027 (tesis en proceso)</div></div></div>
+      <div class="cert"><span class="cert__icon">🏆</span><div><div class="cert__name">Diplomado en Desarrollo de Aplicaciones Web — Universidad Nacional</div><div class="cert__date">2021</div></div></div>
+      <div class="cert"><span class="cert__icon">🏆</span><div><div class="cert__name">Programa Misión TIC 2022 (Ciclos 1, 2, 3 y 4a)</div><div class="cert__date">2022</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title"><span class="section__title-icon">📬</span> Contacto</h2>
+    <div class="contact-grid">
+      <a href="https://github.com/Dacr2153" target="_blank" rel="noopener" class="contact-item"><span class="contact-item__icon">{ }</span><div><div class="contact-item__label">GitHub</div><div class="contact-item__value">github.com/Dacr2153</div></div></a>
+      <a href="https://www.linkedin.com/in/TU-USUARIO" target="_blank" rel="noopener" class="contact-item"><span class="contact-item__icon">in</span><div><div class="contact-item__label">LinkedIn</div><div class="contact-item__value">linkedin.com/in/TU-USUARIO</div></div></a>
+      <a href="mailto:daacolorador@gmail.com" class="contact-item"><span class="contact-item__icon">@</span><div><div class="contact-item__label">Correo</div><div class="contact-item__value">daacolorador@gmail.com</div></div></a>
+      <a href="mailto:DaCr2153@proton.me" class="contact-item"><span class="contact-item__icon">🔒</span><div><div class="contact-item__label">Correo Seguro</div><div class="contact-item__value">DaCr2153@proton.me</div></div></a>
+      <a href="cv/CV_2026.pdf" target="_blank" rel="noopener" class="contact-item"><span class="contact-item__icon">📄</span><div><div class="contact-item__label">Descargar CV</div><div class="contact-item__value">CV_2026.pdf</div></div></a>
+    </div>
+  </section>
+
+  <div class="switch"><a href="index.html">🖥️ Ver versión con terminal</a></div>
+  <div class="footer">© 2026 David Colorado. Built with HTML & CSS.</div>
+</div>
+</body>
+</html>
