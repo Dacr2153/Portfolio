@@ -1,65 +1,312 @@
-/* === LIGHT THEME === */
+/* === LIGHT THEME — inspired by anirudhthakur.work === */
 html.light {
-  --bg-terminal:     #f8f9fa;
-  --bg-titlebar:     #e9ecef;
-  --bg-tabbar:       #e2e6ea;
-  --bg-tab-active:   #f8f9fa;
-  --bg-selection:    rgba(97, 175, 239, 0.2);
-  --bg-hover:        rgba(97, 175, 239, 0.08);
-  --bg-modal:        rgba(248, 249, 250, 0.95);
+  /* Backgrounds — warm, not clinical */
+  --bg-terminal:     #faf9f6;
+  --bg-titlebar:     #f0eeea;
+  --bg-tabbar:       #f5f3ef;
+  --bg-tab-active:   #faf9f6;
+  --bg-selection:    rgba(80, 100, 60, 0.15);
+  --bg-hover:        rgba(80, 120, 80, 0.06);
+  --bg-modal:        rgba(250, 249, 246, 0.96);
 
-  --text-primary:    #1e2530;
-  --text-secondary:  #4a5568;
-  --text-muted:      #718096;
+  /* Text — warm grays, not blue-gray */
+  --text-primary:    #2c2c2c;
+  --text-secondary:  #5a5a5a;
+  --text-muted:      #8a8a8a;
 
-  --term-green:      #1a7a3e;
-  --term-cyan:       #0e6b7a;
-  --term-yellow:     #a06b00;
-  --term-red:        #b33030;
-  --term-blue:       #1a5f99;
+  /* Terminal colors — earthy, natural tones */
+  --term-green:      #3a7d44;
+  --term-cyan:       #1a7a6d;
+  --term-yellow:     #b8860b;
+  --term-red:        #c0392b;
+  --term-blue:       #2874a6;
   --term-magenta:    #7b349e;
-  --term-white:      #2d3748;
+  --term-white:      #3c3c3c;
   --term-orange:     #c05621;
 
-  --accent-cyber:    #1a7a3e;
+  /* Accents */
+  --accent-cyber:    #3a7d44;
   --accent-ai:       #7b349e;
-  --accent-web:      #1a5f99;
+  --accent-web:      #2874a6;
 
-  --border-terminal: #cbd5e0;
-  --border-tab:      #d2d8e0;
-  --border-focus:    #a0aec0;
+  /* Borders — soft, warm */
+  --border-terminal: #e0ddd8;
+  --border-tab:      #d5d2cc;
+  --border-focus:    #b0a99e;
 
-  --shadow-window:   0 10px 40px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+  /* Shadows — very subtle */
+  --shadow-window:   0 8px 32px rgba(0, 0, 0, 0.08),
+                     0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-glow:     0 0 16px rgba(58, 125, 68, 0.06);
 }
 
+/* === Body background === */
 html.light body {
-  background: #d1d5db;
+  background: #e8e5e0;
 }
 
-html.light .dot--red    { background: #e74c3c; }
-html.light .dot--yellow { background: #f39c12; }
-html.light .dot--green  { background: #27ae60; }
+/* === Dots — earthy === */
+html.light .dot--red    { background: #c0392b; }
+html.light .dot--yellow { background: #d4a017; }
+html.light .dot--green  { background: #3a7d44; }
 
-html.light .project-detail {
-  background: rgba(233, 236, 239, 0.5);
+/* === Terminal === */
+html.light .terminal {
+  border-color: #d5d2cc;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+              0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-html.light .terminal__body::before {
-  display: none;
+/* === Tabs === */
+html.light .tab {
+  color: #6a6a6a;
+  border-color: #e0ddd8;
 }
 
+html.light .tab:hover {
+  color: #2c2c2c;
+  background: rgba(58, 125, 68, 0.04);
+}
+
+html.light .tab--active {
+  color: #3a7d44;
+  background: #faf9f6;
+}
+
+html.light .tab--active::after {
+  background: #3a7d44;
+}
+
+/* === Title bar === */
+html.light .terminal__titlebar {
+  background: #f0eeea;
+  border-color: #e0ddd8;
+}
+
+/* === Prompt === */
+html.light .prompt {
+  color: #3a7d44;
+}
+
+/* === Section headers === */
+html.light .section-header__title {
+  color: #b8860b;
+}
+
+html.light .section-header {
+  border-color: #e0ddd8;
+}
+
+/* === Neofetch === */
+html.light .neofetch__ascii {
+  color: #3a7d44;
+}
+
+html.light .neofetch__label {
+  color: #1a7a6d;
+}
+
+/* === Skill bars === */
+html.light .skill-bar__track {
+  background: #e0ddd8;
+}
+
+/* === Project entries === */
+html.light .project-entry:hover {
+  background: rgba(58, 125, 68, 0.04);
+}
+
+html.light .project-entry__arrow {
+  color: #8a8a8a;
+}
+
+/* === Metric cards === */
+html.light .metric-card {
+  background: #ffffff;
+  border-color: #e0ddd8;
+}
+
+html.light .metric-card__label {
+  color: #8a8a8a;
+}
+
+html.light .metric-card__value {
+  color: #3a7d44;
+}
+
+html.light .metric-card__bar {
+  background: #e0ddd8;
+}
+
+/* === Filter buttons === */
+html.light .filter-btn {
+  color: #6a6a6a;
+  border-color: #d5d2cc;
+}
+
+html.light .filter-btn:hover {
+  color: #2c2c2c;
+  border-color: #b0a99e;
+}
+
+html.light .filter-btn--active {
+  color: #3a7d44;
+  border-color: #3a7d44;
+  background: rgba(58, 125, 68, 0.06);
+}
+
+/* === Contact channels === */
+html.light .contact-channel {
+  border-color: #e0ddd8;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+html.light .contact-channel:hover {
+  border-color: #3a7d44;
+  background: rgba(58, 125, 68, 0.03);
+}
+
+html.light .contact-channel__icon {
+  background: rgba(58, 125, 68, 0.06);
+  border-color: rgba(58, 125, 68, 0.1);
+}
+
+/* === Contact form === */
 html.light .contact-form {
   background: transparent;
 }
 
-html.light .cursor {
-  background: var(--term-green);
+html.light .contact-form__input,
+html.light .contact-form__textarea {
+  border-color: #d5d2cc;
+  color: #2c2c2c;
 }
 
-/* === TERMINAL EMULATOR — LIGHT === */
+html.light .contact-form__input:focus,
+html.light .contact-form__textarea:focus {
+  border-color: #3a7d44;
+}
+
+html.light .contact-form__submit {
+  border-color: #3a7d44;
+  color: #3a7d44;
+}
+
+html.light .contact-form__submit:hover {
+  background: #3a7d44;
+  color: #fff;
+}
+
+/* === Project detail === */
+html.light .project-detail {
+  background: rgba(240, 238, 234, 0.8);
+}
+
+html.light .project-detail__arch {
+  background: #f5f3ef;
+  border-color: #e0ddd8;
+  color: #3a7d44;
+}
+
+/* === Experience === */
+html.light .experience-entry {
+  border-color: #e0ddd8;
+}
+
+html.light .experience-entry__role {
+  color: #3a7d44;
+}
+
+html.light .experience-entry__company {
+  color: #1a7a6d;
+}
+
+html.light .experience-entry__date {
+  background: rgba(58, 125, 68, 0.04);
+  border-color: #e0ddd8;
+}
+
+html.light .experience-entry__list li {
+  color: #2c2c2c;
+}
+
+/* === Certs === */
+html.light .cert-entry:hover {
+  background: rgba(184, 134, 11, 0.04);
+}
+
+html.light .cert-entry__name {
+  color: #2c2c2c;
+}
+
+html.light .cert-entry__date {
+  background: rgba(184, 134, 11, 0.04);
+  border-color: #e0ddd8;
+}
+
+/* === Hero === */
+html.light .hero-name {
+  background: linear-gradient(135deg, #3a7d44 0%, #1a7a6d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+html.light .hero-role {
+  color: #5a5a5a;
+}
+
+html.light .hero-focus {
+  color: #6a6a6a;
+}
+
+html.light .hero-ls__dir {
+  color: #1a7a6d;
+  border-color: #d5d2cc;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+html.light .hero-ls__dir:hover {
+  border-color: #1a7a6d;
+  background: rgba(26, 122, 109, 0.04);
+}
+
+/* === Footer === */
+html.light .footer {
+  border-color: #e0ddd8;
+  color: #8a8a8a;
+}
+
+/* === Boot === */
+html.light .boot-line__text {
+  color: #2c2c2c;
+}
+
+html.light .boot-line__status {
+  color: #3a7d44;
+}
+
+html.light .boot-welcome__title {
+  color: #b8860b;
+}
+
+html.light .boot-welcome__subtitle {
+  color: #5a5a5a;
+}
+
+/* === Scrollbar === */
+html.light .terminal__body::-webkit-scrollbar-thumb {
+  background: #d5d2cc;
+}
+
+/* === Cursor === */
+html.light .cursor {
+  background: #3a7d44;
+}
+
+/* === Terminal emulator — light === */
 html.light .term-emulator {
   background: #ffffff;
-  border-color: #cbd5e0;
+  border-color: #d5d2cc;
 }
 
 html.light .term-emulator::before {
@@ -67,67 +314,66 @@ html.light .term-emulator::before {
 }
 
 html.light .term-emulator__output {
-  color: #1e2530;
+  color: #2c2c2c;
 }
 
 html.light .term-emulator__input-line {
-  background: #f7f8fa;
-  border-color: #cbd5e0;
+  background: #f5f3ef;
+  border-color: #d5d2cc;
 }
 
 html.light .term-emulator__input {
-  color: #1e2530;
+  color: #2c2c2c;
 }
 
-/* Output lines — light */
 html.light .term-emulator__line {
-  color: #2d3748;
+  color: #3c3c3c;
 }
 
 html.light .term-emulator__line.input-echo {
-  color: #4a5568;
+  color: #5a5a5a;
 }
 
 html.light .term-emulator__line.dim {
-  color: #718096;
+  color: #8a8a8a;
 }
 
 html.light .term-emulator__line.error {
-  color: #c53030;
+  color: #c0392b;
 }
 
 html.light .term-emulator__line.help-header,
 html.light .term-emulator__line.highlight {
-  color: #975a16;
+  color: #b8860b;
 }
 
 html.light .term-emulator__line.cyan {
-  color: #0e6b7a;
+  color: #1a7a6d;
 }
 
 html.light .term-emulator__line.green {
-  color: #1a7a3e;
+  color: #3a7d44;
 }
 
 html.light .term-emulator__line.yellow {
-  color: #975a16;
+  color: #b8860b;
 }
 
 html.light .term-emulator__line.project-title {
-  color: #1a7a3e;
+  color: #3a7d44;
 }
 
-/* Span colors — light */
+/* Spans — light */
 html.light .term-emulator__line .term-cmd {
-  color: #0e6b7a;
+  color: #1a7a6d;
 }
 
 html.light .term-emulator__line .term-desc {
-  color: #4a5568;
+  color: #5a5a5a;
 }
 
 html.light .term-emulator__line .term-dir-cyber {
-  color: #1a7a3e;
+  color: #3a7d44;
 }
 
 html.light .term-emulator__line .term-dir-ai {
@@ -135,127 +381,63 @@ html.light .term-emulator__line .term-dir-ai {
 }
 
 html.light .term-emulator__line .term-dir-web {
-  color: #1a5f99;
+  color: #2874a6;
 }
 
 html.light .term-emulator__line .term-file {
-  color: #0e6b7a;
+  color: #1a7a6d;
 }
 
 html.light .term-emulator__line .term-dim {
-  color: #718096;
+  color: #8a8a8a;
 }
 
 html.light .term-emulator__line .term-tech,
 html.light .term-emulator__line .term-tech-item {
-  color: #0e6b7a;
-  border-color: #cbd5e0;
+  color: #1a7a6d;
+  border-color: #d5d2cc;
 }
 
 html.light .term-emulator__line .term-metric-label {
-  color: #4a5568;
+  color: #5a5a5a;
 }
 
 html.light .term-emulator__line .term-metric-value {
-  color: #1a7a3e;
+  color: #3a7d44;
 }
 
 html.light .term-emulator__line .term-skill-name {
-  color: #1e2530;
+  color: #2c2c2c;
 }
 
 html.light .term-emulator__line .term-pct {
-  color: #718096;
+  color: #8a8a8a;
 }
 
 html.light .term-emulator__line .term-link {
-  color: #0e6b7a;
-  text-decoration-color: rgba(14, 107, 122, 0.3);
+  color: #1a7a6d;
+  text-decoration-color: rgba(26, 122, 109, 0.3);
 }
 
 /* Skill bars — light */
-html.light .term-bar-green   { color: #1a7a3e; }
+html.light .term-bar-green   { color: #3a7d44; }
 html.light .term-bar-magenta { color: #7b349e; }
-html.light .term-bar-blue    { color: #1a5f99; }
-html.light .term-bar-cyan    { color: #0e6b7a; }
-html.light .term-bar-yellow  { color: #975a16; }
+html.light .term-bar-blue    { color: #2874a6; }
+html.light .term-bar-cyan    { color: #1a7a6d; }
+html.light .term-bar-yellow  { color: #b8860b; }
 
 /* Cursor — light */
 html.light .term-emulator__cursor {
-  background: #1a7a3e;
-  box-shadow: 0 0 4px rgba(26, 122, 62, 0.3);
+  background: #3a7d44;
+  box-shadow: 0 0 4px rgba(58, 125, 68, 0.3);
 }
 
-/* Tabs — light */
-html.light .tab {
-  color: #4a5568;
-  border-color: #d2d8e0;
+/* Grain — lighter */
+html.light .grain {
+  opacity: 0.015;
 }
 
-html.light .tab:hover {
-  color: #1e2530;
-  background: rgba(97, 175, 239, 0.08);
-}
-
-html.light .tab--active {
-  color: #1a7a3e;
-  background: #f8f9fa;
-}
-
-html.light .tab--active::after {
-  background: #1a7a3e;
-}
-
-/* Prompt — light */
-html.light .prompt {
-  color: #1a7a3e;
-}
-
-/* Section headers — light */
-html.light .section-header__title {
-  color: #975a16;
-}
-
-/* Metric cards — light */
-html.light .metric-card {
-  background: #ffffff;
-  border-color: #cbd5e0;
-}
-
-html.light .metric-card__value {
-  color: #1a7a3e;
-}
-
-/* Contact channels — light */
-html.light .contact-channel {
-  border-color: #cbd5e0;
-}
-
-html.light .contact-channel:hover {
-  border-color: #1a7a3e;
-}
-
-/* Filter buttons — light */
-html.light .filter-btn {
-  color: #4a5568;
-  border-color: #cbd5e0;
-}
-
-html.light .filter-btn--active {
-  color: #1a7a3e;
-  border-color: #1a7a3e;
-}
-
-/* Project entries — light */
-html.light .project-entry:hover {
-  background: rgba(26, 122, 62, 0.06);
-}
-
-html.light .project-entry__arrow {
-  color: #718096;
-}
-
-/* Neofetch ASCII — light */
-html.light .neofetch__ascii {
-  color: #1a7a3e;
+/* Orbs — muted */
+html.light .orb {
+  opacity: 0.03;
 }
