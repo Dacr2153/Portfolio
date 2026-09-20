@@ -9,7 +9,7 @@
   background: var(--bg-terminal);
   border: 1px solid var(--border-terminal);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-window), 0 0 60px rgba(136, 198, 160, 0.03);
+  box-shadow: var(--shadow-window), 0 0 80px rgba(136, 198, 160, 0.02);
   overflow: hidden;
   z-index: 10;
 }
@@ -18,7 +18,7 @@
 .terminal__titlebar {
   display: flex;
   align-items: center;
-  padding: var(--sp-2) var(--sp-4);
+  padding: 10px var(--sp-4);
   background: var(--bg-titlebar);
   border-bottom: 1px solid var(--border-terminal);
   user-select: none;
@@ -35,20 +35,36 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  opacity: 0;
   transition: opacity 0.2s ease;
 }
 
-.dot:hover { opacity: 0.8; }
 .dot--red    { background: #e06c75; }
 .dot--yellow { background: #e5c07b; }
 .dot--green  { background: #88c6a0; }
 
+.dot--red::after    { box-shadow: 0 0 8px #e06c75; }
+.dot--yellow::after { box-shadow: 0 0 8px #e5c07b; }
+.dot--green::after  { box-shadow: 0 0 8px #88c6a0; }
+
+.dot:hover::after { opacity: 1; }
+
 .terminal__title {
   flex: 1;
   text-align: center;
-  color: var(--text-secondary);
-  font-size: var(--text-xs);
-  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .terminal__titlebar-actions {
@@ -78,6 +94,7 @@
   overflow-x: auto;
   scrollbar-width: none;
   flex-shrink: 0;
+  position: relative;
 }
 
 .terminal__tabbar::-webkit-scrollbar { display: none; }
@@ -86,7 +103,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: var(--sp-2) var(--sp-4);
+  padding: 10px var(--sp-4);
   background: transparent;
   border: none;
   border-right: 1px solid var(--border-tab);
@@ -143,48 +160,25 @@
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-terminal) transparent;
 }
 
-/* Scanline overlay */
-.terminal__body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.04) 2px,
-    rgba(0, 0, 0, 0.04) 4px
-  );
-  pointer-events: none;
-  z-index: 50;
+.terminal__body::-webkit-scrollbar {
+  width: 4px;
 }
 
-/* Animated scanline bar */
-.terminal__body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(
-    180deg,
-    rgba(136, 198, 160, 0.03) 0%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 50;
-  animation: scanlineMove 6s linear infinite;
+.terminal__body::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-@keyframes scanlineMove {
-  0% { transform: translateY(-60px); }
-  100% { transform: translateY(100vh); }
+.terminal__body::-webkit-scrollbar-thumb {
+  background: var(--border-terminal);
+  border-radius: 2px;
+}
+
+.terminal__body::-webkit-scrollbar-thumb:hover {
+  background: var(--border-focus);
 }
 
 /* === STATUS BAR === */
@@ -192,12 +186,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--sp-1) var(--sp-4);
+  padding: 4px var(--sp-4);
   background: var(--bg-titlebar);
   border-top: 1px solid var(--border-terminal);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
   flex-shrink: 0;
+  letter-spacing: 0.03em;
 }
 
 .statusbar__left,
@@ -231,12 +226,13 @@
 /* === PROMPT === */
 .prompt {
   color: var(--term-green);
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .prompt::before {
   content: '$ ';
   color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* === COMMAND OUTPUT === */
@@ -254,15 +250,15 @@
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  margin-bottom: var(--sp-4);
-  padding-bottom: var(--sp-2);
-  border-bottom: 1px dashed var(--border-terminal);
+  margin-bottom: var(--sp-5);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border-terminal);
 }
 
 .section-header__title {
   color: var(--term-yellow);
   font-size: var(--text-md);
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .section-header__path {

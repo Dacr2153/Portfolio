@@ -1,11 +1,11 @@
 :root {
   /* === FONDOS === */
   --bg-terminal:     #0a0e14;
-  --bg-titlebar:     #141921;
+  --bg-titlebar:     #111820;
   --bg-tabbar:       #0d1117;
   --bg-tab-active:   #0a0e14;
   --bg-selection:    rgba(62, 68, 81, 0.5);
-  --bg-hover:        rgba(136, 198, 147, 0.06);
+  --bg-hover:        rgba(136, 198, 147, 0.05);
   --bg-modal:        rgba(10, 14, 20, 0.92);
 
   /* === TEXTO === */
@@ -29,13 +29,15 @@
   --accent-web:      #61afef;
 
   /* === BORDES === */
-  --border-terminal: #2c313c;
-  --border-tab:      #1e2530;
-  --border-focus:    #3e4451;
+  --border-terminal: #1e2530;
+  --border-tab:      #171d26;
+  --border-focus:    #2c313c;
 
   /* === SOMBRAS === */
-  --shadow-window:   0 20px 60px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 0, 0, 0.3);
-  --shadow-glow:     0 0 15px rgba(136, 198, 160, 0.1);
+  --shadow-window:   0 24px 80px rgba(0, 0, 0, 0.55),
+                     0 8px 24px rgba(0, 0, 0, 0.3),
+                     0 0 1px rgba(0, 0, 0, 0.4);
+  --shadow-glow:     0 0 20px rgba(136, 198, 160, 0.06);
 
   /* === FUENTES === */
   --font-mono:       'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
@@ -97,8 +99,9 @@
   --border-tab:      #ced4da;
   --border-focus:    #adb5bd;
 
-  --shadow-window:   0 10px 40px rgba(0, 0, 0, 0.1);
-  --shadow-glow:     0 0 10px rgba(43, 138, 62, 0.1);
+  --shadow-window:   0 12px 48px rgba(0, 0, 0, 0.1),
+                     0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-glow:     0 0 12px rgba(43, 138, 62, 0.08);
 }
 
 /* === CYBER THEME === */
@@ -108,7 +111,7 @@
   --bg-tabbar:       #000d00;
   --bg-tab-active:   #000a00;
   --bg-selection:    rgba(0, 255, 65, 0.15);
-  --bg-hover:        rgba(0, 255, 65, 0.05);
+  --bg-hover:        rgba(0, 255, 65, 0.04);
   --bg-modal:        rgba(0, 5, 0, 0.95);
 
   --text-primary:    #00ff41;
@@ -132,6 +135,7 @@
   --border-tab:      #002200;
   --border-focus:    #005500;
 
-  --shadow-window:   0 0 30px rgba(0, 255, 65, 0.1);
-  --shadow-glow:     0 0 20px rgba(0, 255, 65, 0.15);
+  --shadow-window:   0 0 30px rgba(0, 255, 65, 0.08),
+                     0 0 80px rgba(0, 255, 65, 0.03);
+  --shadow-glow:     0 0 20px rgba(0, 255, 65, 0.12);
 }
