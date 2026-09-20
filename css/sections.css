@@ -1046,3 +1046,67 @@
     padding-left: var(--sp-5);
   }
 }
+
+/* === CALLOUT TOOLTIP === */
+.callout {
+  position: absolute;
+  top: 100%;
+  right: 12px;
+  z-index: 200;
+  opacity: 0;
+  animation: calloutIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both,
+             calloutOut 0.4s ease 7s forwards;
+  pointer-events: none;
+}
+
+.callout__content {
+  position: relative;
+  background: var(--bg-titlebar);
+  border: 1px solid var(--border-terminal);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  min-width: 220px;
+}
+
+.callout__arrow {
+  position: absolute;
+  top: -6px;
+  right: 48px;
+  width: 10px;
+  height: 10px;
+  background: var(--bg-titlebar);
+  border-top: 1px solid var(--border-terminal);
+  border-left: 1px solid var(--border-terminal);
+  transform: rotate(45deg);
+}
+
+.callout__header {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--term-green);
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.callout__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.callout__item {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+@keyframes calloutIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes calloutOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-4px); pointer-events: none; }
+}
