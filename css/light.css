@@ -40,9 +40,9 @@ html.light {
   --shadow-glow:     0 0 16px rgba(39, 103, 73, 0.06);
 }
 
-/* === Body background — dark blue-gray === */
+/* === Body background — warm beige === */
 html.light body {
-  background: #2c3440;
+  background: #e2d8c8;
 }
 
 /* === Dots — earthy tones === */
