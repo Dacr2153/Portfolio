@@ -8,7 +8,7 @@
 @keyframes orbDrift3{0%,100%{transform:translate(0,0)}33%{transform:translate(20px,-25px)}66%{transform:translate(-30px,15px)}}
 
 /* === FILM GRAIN OVERLAY === */
-.grain{position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.035;overflow:hidden}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;overflow:hidden}
 .grain::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 8s steps(10) infinite}
 @keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-10%)}20%{transform:translate(-15%,5%)}30%{transform:translate(7%,-25%)}40%{transform:translate(-5%,25%)}50%{transform:translate(-15%,10%)}60%{transform:translate(15%,0%)}70%{transform:translate(0%,15%)}80%{transform:translate(3%,35%)}90%{transform:translate(-10%,10%)}}
 
@@ -26,13 +26,13 @@
 @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
 /* === CRT POWER-ON EFFECT === */
-.terminal--crt{opacity:0;animation:crtPowerOn 0.8s ease-out 0.2s forwards}
-@keyframes crtPowerOn{
-  0%{opacity:0;transform:scaleY(0.005) scaleX(0.3);filter:brightness(8)}
-  30%{opacity:1;transform:scaleY(0.005) scaleX(1);filter:brightness(4)}
-  50%{transform:scaleY(0.4) scaleX(1);filter:brightness(1.5)}
-  70%{transform:scaleY(0.8) scaleX(1);filter:brightness(1.1)}
-  100%{opacity:1;transform:scaleY(1) scaleX(1);filter:brightness(1)}
+.terminal--crt{
+  animation:terminalFadeIn 0.6s ease-out 0.15s both;
+}
+@keyframes terminalFadeIn{
+  0%{opacity:0;filter:brightness(3)}
+  60%{opacity:1;filter:brightness(1.2)}
+  100%{opacity:1;filter:brightness(1)}
 }
 
 /* === GLOW EFFECTS === */
