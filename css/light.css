@@ -1,174 +1,242 @@
-/* === LIGHT THEME — inspired by anirudhthakur.work === */
+/* === LIGHT THEME — anirudhthakur.work warm palette === */
 html.light {
-  /* Backgrounds — warm, not clinical */
-  --bg-terminal:     #faf9f6;
-  --bg-titlebar:     #f0eeea;
-  --bg-tabbar:       #f5f3ef;
-  --bg-tab-active:   #faf9f6;
-  --bg-selection:    rgba(80, 100, 60, 0.15);
-  --bg-hover:        rgba(80, 120, 80, 0.06);
-  --bg-modal:        rgba(250, 249, 246, 0.96);
+  /* Backgrounds — warm cream/beige */
+  --bg-terminal:     #f5f0e8;
+  --bg-titlebar:     #ebe4d6;
+  --bg-tabbar:       #ede7db;
+  --bg-tab-active:   #f5f0e8;
+  --bg-selection:    rgba(43, 108, 176, 0.15);
+  --bg-hover:        rgba(43, 108, 176, 0.05);
+  --bg-modal:        rgba(245, 240, 232, 0.96);
 
-  /* Text — warm grays, not blue-gray */
-  --text-primary:    #2c2c2c;
-  --text-secondary:  #5a5a5a;
-  --text-muted:      #8a8a8a;
+  /* Text — warm browns, not cool grays */
+  --text-primary:    #3d3428;
+  --text-secondary:  #6b5e50;
+  --text-muted:      #9a8d7f;
 
-  /* Terminal colors — earthy, natural tones */
-  --term-green:      #3a7d44;
-  --term-cyan:       #1a7a6d;
-  --term-yellow:     #b8860b;
-  --term-red:        #c0392b;
-  --term-blue:       #2874a6;
-  --term-magenta:    #7b349e;
-  --term-white:      #3c3c3c;
+  /* Terminal colors — earthy, natural */
+  --term-green:      #276749;
+  --term-cyan:       #2b6cb0;
+  --term-yellow:     #b7791f;
+  --term-red:        #c53030;
+  --term-blue:       #2b6cb0;
+  --term-magenta:    #6b46c1;
+  --term-white:      #4a4035;
   --term-orange:     #c05621;
 
   /* Accents */
-  --accent-cyber:    #3a7d44;
-  --accent-ai:       #7b349e;
-  --accent-web:      #2874a6;
+  --accent-cyber:    #276749;
+  --accent-ai:       #6b46c1;
+  --accent-web:      #2b6cb0;
 
-  /* Borders — soft, warm */
-  --border-terminal: #e0ddd8;
-  --border-tab:      #d5d2cc;
-  --border-focus:    #b0a99e;
+  /* Borders — warm tan */
+  --border-terminal: #d4c5a9;
+  --border-tab:      #c9b99a;
+  --border-focus:    #a89880;
 
-  /* Shadows — very subtle */
-  --shadow-window:   0 8px 32px rgba(0, 0, 0, 0.08),
-                     0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-glow:     0 0 16px rgba(58, 125, 68, 0.06);
+  /* Shadows — warm */
+  --shadow-window:   0 8px 32px rgba(60, 40, 20, 0.08),
+                     0 2px 8px rgba(60, 40, 20, 0.04);
+  --shadow-glow:     0 0 16px rgba(39, 103, 73, 0.06);
 }
 
-/* === Body background === */
+/* === Body background — warm beige === */
 html.light body {
-  background: #e8e5e0;
+  background: #e2d8c8;
 }
 
-/* === Dots — earthy === */
-html.light .dot--red    { background: #c0392b; }
-html.light .dot--yellow { background: #d4a017; }
-html.light .dot--green  { background: #3a7d44; }
+/* === Dots — earthy tones === */
+html.light .dot--red    { background: #e74c3c; }
+html.light .dot--yellow { background: #f39c12; }
+html.light .dot--green  { background: #27ae60; }
 
-/* === Terminal === */
+/* === Terminal window === */
 html.light .terminal {
-  border-color: #d5d2cc;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
-              0 2px 8px rgba(0, 0, 0, 0.04);
+  border-color: #c9b99a;
+  box-shadow: 0 8px 32px rgba(60, 40, 20, 0.08),
+              0 2px 8px rgba(60, 40, 20, 0.04);
+}
+
+/* === Titlebar === */
+html.light .terminal__titlebar {
+  background: #ebe4d6;
+  border-color: #d4c5a9;
 }
 
 /* === Tabs === */
 html.light .tab {
-  color: #6a6a6a;
-  border-color: #e0ddd8;
+  color: #7a6e60;
+  border-color: #d4c5a9;
 }
 
 html.light .tab:hover {
-  color: #2c2c2c;
-  background: rgba(58, 125, 68, 0.04);
+  color: #3d3428;
+  background: rgba(43, 108, 176, 0.04);
 }
 
 html.light .tab--active {
-  color: #3a7d44;
-  background: #faf9f6;
+  color: #276749;
+  background: #f5f0e8;
 }
 
 html.light .tab--active::after {
-  background: #3a7d44;
-}
-
-/* === Title bar === */
-html.light .terminal__titlebar {
-  background: #f0eeea;
-  border-color: #e0ddd8;
+  background: #276749;
 }
 
 /* === Prompt === */
 html.light .prompt {
-  color: #3a7d44;
+  color: #276749;
 }
 
 /* === Section headers === */
 html.light .section-header__title {
-  color: #b8860b;
+  color: #b7791f;
 }
 
 html.light .section-header {
-  border-color: #e0ddd8;
+  border-color: #d4c5a9;
+}
+
+/* === Hero name — dark navy gradient === */
+html.light .hero-name {
+  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html.light .hero-role {
+  color: #6b5e50;
+}
+
+html.light .hero-focus {
+  color: #7a6e60;
+}
+
+/* === Hero directory buttons === */
+html.light .hero-ls__dir {
+  color: #2b6cb0;
+  border-color: #d4c5a9;
+  background: rgba(245, 240, 232, 0.5);
+}
+
+html.light .hero-ls__dir:hover {
+  border-color: #2b6cb0;
+  background: rgba(43, 108, 176, 0.04);
 }
 
 /* === Neofetch === */
 html.light .neofetch__ascii {
-  color: #3a7d44;
+  color: #276749;
 }
 
 html.light .neofetch__label {
-  color: #1a7a6d;
+  color: #2b6cb0;
+}
+
+html.light .neofetch__value {
+  color: #3d3428;
+}
+
+html.light .neofetch__section {
+  border-color: #d4c5a9;
+}
+
+html.light .neofetch__section-title {
+  color: #b7791f;
 }
 
 /* === Skill bars === */
 html.light .skill-bar__track {
-  background: #e0ddd8;
+  background: #d4c5a9;
+}
+
+html.light .skill-bar__label {
+  color: #3d3428;
+}
+
+html.light .skill-bar__pct {
+  color: #9a8d7f;
 }
 
 /* === Project entries === */
 html.light .project-entry:hover {
-  background: rgba(58, 125, 68, 0.04);
+  background: rgba(43, 108, 176, 0.04);
+}
+
+html.light .project-entry__title {
+  color: #1a365d;
+}
+
+html.light .project-entry__desc {
+  color: #6b5e50;
 }
 
 html.light .project-entry__arrow {
-  color: #8a8a8a;
+  color: #9a8d7f;
+}
+
+/* === Project filters === */
+html.light .filter-btn {
+  color: #6b5e50;
+  border-color: #d4c5a9;
+}
+
+html.light .filter-btn:hover {
+  color: #3d3428;
+  border-color: #a89880;
+}
+
+html.light .filter-btn--active {
+  color: #276749;
+  border-color: #276749;
+  background: rgba(39, 103, 73, 0.06);
 }
 
 /* === Metric cards === */
 html.light .metric-card {
-  background: #ffffff;
-  border-color: #e0ddd8;
+  background: #faf7f0;
+  border-color: #d4c5a9;
 }
 
 html.light .metric-card__label {
-  color: #8a8a8a;
+  color: #9a8d7f;
 }
 
 html.light .metric-card__value {
-  color: #3a7d44;
+  color: #276749;
 }
 
 html.light .metric-card__bar {
-  background: #e0ddd8;
+  background: #d4c5a9;
 }
 
-/* === Filter buttons === */
-html.light .filter-btn {
-  color: #6a6a6a;
-  border-color: #d5d2cc;
-}
-
-html.light .filter-btn:hover {
-  color: #2c2c2c;
-  border-color: #b0a99e;
-}
-
-html.light .filter-btn--active {
-  color: #3a7d44;
-  border-color: #3a7d44;
-  background: rgba(58, 125, 68, 0.06);
+html.light .metric-card:hover {
+  border-color: #a89880;
 }
 
 /* === Contact channels === */
 html.light .contact-channel {
-  border-color: #e0ddd8;
-  background: rgba(255, 255, 255, 0.5);
+  border-color: #d4c5a9;
+  background: rgba(250, 247, 240, 0.5);
 }
 
 html.light .contact-channel:hover {
-  border-color: #3a7d44;
-  background: rgba(58, 125, 68, 0.03);
+  border-color: #276749;
+  background: rgba(39, 103, 73, 0.03);
 }
 
 html.light .contact-channel__icon {
-  background: rgba(58, 125, 68, 0.06);
-  border-color: rgba(58, 125, 68, 0.1);
+  background: rgba(39, 103, 73, 0.06);
+  border-color: rgba(39, 103, 73, 0.1);
+}
+
+html.light .contact-channel__label {
+  color: #2b6cb0;
+}
+
+html.light .contact-channel__value {
+  color: #6b5e50;
 }
 
 /* === Contact form === */
@@ -178,135 +246,121 @@ html.light .contact-form {
 
 html.light .contact-form__input,
 html.light .contact-form__textarea {
-  border-color: #d5d2cc;
-  color: #2c2c2c;
+  border-color: #d4c5a9;
+  color: #3d3428;
 }
 
 html.light .contact-form__input:focus,
 html.light .contact-form__textarea:focus {
-  border-color: #3a7d44;
+  border-color: #276749;
 }
 
 html.light .contact-form__submit {
-  border-color: #3a7d44;
-  color: #3a7d44;
+  border-color: #276749;
+  color: #276749;
 }
 
 html.light .contact-form__submit:hover {
-  background: #3a7d44;
+  background: #276749;
   color: #fff;
 }
 
 /* === Project detail === */
 html.light .project-detail {
-  background: rgba(240, 238, 234, 0.8);
+  background: rgba(235, 228, 214, 0.8);
 }
 
 html.light .project-detail__arch {
-  background: #f5f3ef;
-  border-color: #e0ddd8;
-  color: #3a7d44;
+  background: #ede7db;
+  border-color: #d4c5a9;
+  color: #276749;
 }
 
 /* === Experience === */
 html.light .experience-entry {
-  border-color: #e0ddd8;
+  border-color: #d4c5a9;
 }
 
 html.light .experience-entry__role {
-  color: #3a7d44;
+  color: #276749;
 }
 
 html.light .experience-entry__company {
-  color: #1a7a6d;
+  color: #2b6cb0;
 }
 
 html.light .experience-entry__date {
-  background: rgba(58, 125, 68, 0.04);
-  border-color: #e0ddd8;
+  background: rgba(39, 103, 73, 0.04);
+  border-color: #d4c5a9;
+  color: #9a8d7f;
 }
 
 html.light .experience-entry__list li {
-  color: #2c2c2c;
+  color: #3d3428;
 }
 
 /* === Certs === */
 html.light .cert-entry:hover {
-  background: rgba(184, 134, 11, 0.04);
+  background: rgba(183, 121, 31, 0.04);
 }
 
 html.light .cert-entry__name {
-  color: #2c2c2c;
+  color: #3d3428;
 }
 
 html.light .cert-entry__date {
-  background: rgba(184, 134, 11, 0.04);
-  border-color: #e0ddd8;
-}
-
-/* === Hero === */
-html.light .hero-name {
-  background: linear-gradient(135deg, #3a7d44 0%, #1a7a6d 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-html.light .hero-role {
-  color: #5a5a5a;
-}
-
-html.light .hero-focus {
-  color: #6a6a6a;
-}
-
-html.light .hero-ls__dir {
-  color: #1a7a6d;
-  border-color: #d5d2cc;
-  background: rgba(255, 255, 255, 0.4);
-}
-
-html.light .hero-ls__dir:hover {
-  border-color: #1a7a6d;
-  background: rgba(26, 122, 109, 0.04);
+  background: rgba(183, 121, 31, 0.04);
+  border-color: #d4c5a9;
+  color: #9a8d7f;
 }
 
 /* === Footer === */
 html.light .footer {
-  border-color: #e0ddd8;
-  color: #8a8a8a;
+  border-color: #d4c5a9;
+  color: #9a8d7f;
 }
 
 /* === Boot === */
 html.light .boot-line__text {
-  color: #2c2c2c;
+  color: #3d3428;
 }
 
 html.light .boot-line__status {
-  color: #3a7d44;
+  color: #276749;
 }
 
 html.light .boot-welcome__title {
-  color: #b8860b;
+  color: #b7791f;
 }
 
 html.light .boot-welcome__subtitle {
-  color: #5a5a5a;
+  color: #6b5e50;
 }
 
 /* === Scrollbar === */
 html.light .terminal__body::-webkit-scrollbar-thumb {
-  background: #d5d2cc;
+  background: #c9b99a;
 }
 
 /* === Cursor === */
 html.light .cursor {
-  background: #3a7d44;
+  background: #276749;
 }
 
-/* === Terminal emulator — light === */
+/* === Grain — very subtle === */
+html.light .grain {
+  opacity: 0.015;
+}
+
+/* === Orbs — barely visible === */
+html.light .orb {
+  opacity: 0.03;
+}
+
+/* === Terminal emulator — warm light === */
 html.light .term-emulator {
-  background: #ffffff;
-  border-color: #d5d2cc;
+  background: #faf7f0;
+  border-color: #d4c5a9;
 }
 
 html.light .term-emulator::before {
@@ -314,130 +368,125 @@ html.light .term-emulator::before {
 }
 
 html.light .term-emulator__output {
-  color: #2c2c2c;
+  color: #3d3428;
 }
 
 html.light .term-emulator__input-line {
-  background: #f5f3ef;
-  border-color: #d5d2cc;
+  background: #ede7db;
+  border-color: #d4c5a9;
 }
 
 html.light .term-emulator__input {
-  color: #2c2c2c;
+  color: #3d3428;
 }
 
 html.light .term-emulator__line {
-  color: #3c3c3c;
+  color: #4a4035;
 }
 
 html.light .term-emulator__line.input-echo {
-  color: #5a5a5a;
+  color: #6b5e50;
 }
 
 html.light .term-emulator__line.dim {
-  color: #8a8a8a;
+  color: #9a8d7f;
 }
 
 html.light .term-emulator__line.error {
-  color: #c0392b;
+  color: #c53030;
 }
 
 html.light .term-emulator__line.help-header,
 html.light .term-emulator__line.highlight {
-  color: #b8860b;
+  color: #b7791f;
 }
 
 html.light .term-emulator__line.cyan {
-  color: #1a7a6d;
+  color: #2b6cb0;
 }
 
 html.light .term-emulator__line.green {
-  color: #3a7d44;
+  color: #276749;
 }
 
 html.light .term-emulator__line.yellow {
-  color: #b8860b;
+  color: #b7791f;
 }
 
 html.light .term-emulator__line.project-title {
-  color: #3a7d44;
+  color: #1a365d;
 }
 
 /* Spans — light */
 html.light .term-emulator__line .term-cmd {
-  color: #1a7a6d;
+  color: #2b6cb0;
 }
 
 html.light .term-emulator__line .term-desc {
-  color: #5a5a5a;
+  color: #6b5e50;
 }
 
 html.light .term-emulator__line .term-dir-cyber {
-  color: #3a7d44;
+  color: #276749;
 }
 
 html.light .term-emulator__line .term-dir-ai {
-  color: #7b349e;
+  color: #6b46c1;
 }
 
 html.light .term-emulator__line .term-dir-web {
-  color: #2874a6;
+  color: #2b6cb0;
 }
 
 html.light .term-emulator__line .term-file {
-  color: #1a7a6d;
+  color: #2b6cb0;
 }
 
 html.light .term-emulator__line .term-dim {
-  color: #8a8a8a;
+  color: #9a8d7f;
 }
 
 html.light .term-emulator__line .term-tech,
 html.light .term-emulator__line .term-tech-item {
-  color: #1a7a6d;
-  border-color: #d5d2cc;
+  color: #2b6cb0;
+  border-color: #d4c5a9;
 }
 
 html.light .term-emulator__line .term-metric-label {
-  color: #5a5a5a;
+  color: #6b5e50;
 }
 
 html.light .term-emulator__line .term-metric-value {
-  color: #3a7d44;
+  color: #276749;
 }
 
 html.light .term-emulator__line .term-skill-name {
-  color: #2c2c2c;
+  color: #3d3428;
 }
 
 html.light .term-emulator__line .term-pct {
-  color: #8a8a8a;
+  color: #9a8d7f;
 }
 
 html.light .term-emulator__line .term-link {
-  color: #1a7a6d;
-  text-decoration-color: rgba(26, 122, 109, 0.3);
+  color: #b7791f;
+  text-decoration-color: rgba(183, 121, 31, 0.3);
 }
 
 /* Skill bars — light */
-html.light .term-bar-green   { color: #3a7d44; }
-html.light .term-bar-magenta { color: #7b349e; }
-html.light .term-bar-blue    { color: #2874a6; }
-html.light .term-bar-cyan    { color: #1a7a6d; }
-html.light .term-bar-yellow  { color: #b8860b; }
+html.light .term-bar-green   { color: #276749; }
+html.light .term-bar-magenta { color: #6b46c1; }
+html.light .term-bar-blue    { color: #2b6cb0; }
+html.light .term-bar-cyan    { color: #2b6cb0; }
+html.light .term-bar-yellow  { color: #b7791f; }
 
 /* Cursor — light */
 html.light .term-emulator__cursor {
-  background: #3a7d44;
-  box-shadow: 0 0 4px rgba(58, 125, 68, 0.3);
+  background: #276749;
+  box-shadow: 0 0 4px rgba(39, 103, 73, 0.3);
 }
 
-/* Grain — lighter */
-html.light .grain {
-  opacity: 0.015;
-}
-
-/* Orbs — muted */
-html.light .orb {
-  opacity: 0.03;
+/* Matrix canvas — hidden in light */
+html.light .matrix-canvas {
+  display: none;
 }
