@@ -122,10 +122,10 @@ function startDevanagari() {
   window.addEventListener('resize', resize);
 
   function draw() {
-    ctx.fillStyle = 'rgba(245, 240, 232, 0.06)';
+    ctx.fillStyle = 'rgba(245, 240, 232, 0.04)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = '#6b4e0a';
+    ctx.fillStyle = '#4a3508';
     ctx.font = fontSize + 'px monospace';
 
     for (let i = 0; i < drops.length; i++) {
