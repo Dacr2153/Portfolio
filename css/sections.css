@@ -144,20 +144,17 @@
 .hero-ls__dir {
   padding: var(--sp-3) var(--sp-5);
   border: 1px solid var(--border-terminal);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   color: var(--term-cyan);
   font-weight: 500;
   font-size: var(--text-sm);
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(20, 25, 33, 0.3);
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .hero-ls__dir:hover {
   border-color: var(--term-cyan);
-  background: rgba(108, 180, 201, 0.06);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(108, 180, 201, 0.1);
+  background: rgba(108, 180, 201, 0.04);
 }
 
 .hero-ls__dir span {
