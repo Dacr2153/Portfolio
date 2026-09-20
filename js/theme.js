@@ -100,42 +100,75 @@ function stopMatrix() {
   }
 }
 
-/* === DEVANAGARI RAIN (light theme) === */
+/* === DEVANAGARI GRID (light theme) === */
+let devMouseX = -1000, devMouseY = -1000;
+
 function startDevanagari() {
   const canvas = document.getElementById('devanagariCanvas');
   if (!canvas) return;
   if (devanagariAnim) return;
 
   const ctx = canvas.getContext('2d');
-  const chars = 'ॐश्रीअआइईउऊएऐओऔकखगघचछजझटठडढणतथदधनपफबभमयरलवशषसह'.split('');
-  const fontSize = 16;
-  let columns, drops;
+  const chars = 'ॐश्रीअआइईउऊएऐओऔकखगघचछजझटठडढणतथदधनपफबभमयरलवशषसह+#=*o.·'.split('');
+  const fontSize = 18;
+  const colSpacing = fontSize;
+  const rowSpacing = fontSize * 1.4;
+  let cols, rows, grid;
 
-  function resize() {
+  function initGrid() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    columns = Math.floor(canvas.width / fontSize);
-    drops = Array.from({ length: columns }, () => Math.random() * -80);
+    cols = Math.ceil(canvas.width / colSpacing) + 1;
+    rows = Math.ceil(canvas.height / rowSpacing) + 1;
+    grid = [];
+    for (let r = 0; r < rows; r++) {
+      grid[r] = [];
+      for (let c = 0; c < cols; c++) {
+        grid[r][c] = {
+          char: chars[Math.floor(Math.random() * chars.length)],
+          timer: Math.random() * 200,
+          speed: 80 + Math.random() * 200
+        };
+      }
+    }
   }
 
-  resize();
-  window.addEventListener('resize', resize);
+  function onMouseMove(e) {
+    devMouseX = e.clientX;
+    devMouseY = e.clientY;
+  }
+
+  window.addEventListener('mousemove', onMouseMove);
+
+  initGrid();
 
   function draw() {
-    ctx.fillStyle = 'rgba(245, 240, 232, 0.04)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = '#4a3508';
-    ctx.font = fontSize + 'px monospace';
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const cell = grid[r][c];
+        const x = c * colSpacing;
+        const y = r * rowSpacing;
 
-    for (let i = 0; i < drops.length; i++) {
-      const char = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        const dx = x - devMouseX;
+        const dy = y - devMouseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const radius = 150;
+        const inRange = dist < radius;
 
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) {
-        drops[i] = 0;
+        cell.timer++;
+        const changeRate = inRange ? 4 : cell.speed;
+        if (cell.timer > changeRate) {
+          cell.char = chars[Math.floor(Math.random() * chars.length)];
+          cell.timer = 0;
+        }
+
+        const alpha = inRange ? 0.35 + (1 - dist / radius) * 0.4 : 0.08;
+        ctx.fillStyle = `rgba(74, 53, 8, ${alpha})`;
+        ctx.font = fontSize + 'px monospace';
+        ctx.fillText(cell.char, x, y);
       }
-      drops[i]++;
     }
 
     devanagariAnim = requestAnimationFrame(draw);
