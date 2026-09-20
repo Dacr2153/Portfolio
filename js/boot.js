@@ -10,10 +10,18 @@ const BOOT_CONFIG = {
   progressDuration: 1200,
   welcomeDelay: 400,
   postBootDelay: 200,
+  typeSpeed: 18,
 };
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function typeBootLine(textEl, text, speed) {
+  for (let i = 0; i < text.length; i++) {
+    textEl.textContent += text[i];
+    await sleep(speed);
+  }
 }
 
 async function runBootSequence() {
@@ -29,13 +37,23 @@ async function runBootSequence() {
   for (const line of lines) {
     const delay = parseInt(line.dataset.delay) || 0;
     await sleep(delay);
+
+    const textEl = line.querySelector('.boot-line__text');
+    const statusEl = line.querySelector('.boot-line__status');
+    const originalText = textEl.textContent;
+    textEl.textContent = '';
+
     line.classList.add('boot-line--visible');
+    await typeBootLine(textEl, originalText, BOOT_CONFIG.typeSpeed);
+    statusEl.style.opacity = '0';
+    statusEl.style.transition = 'opacity 0.15s ease';
+    await sleep(30);
+    statusEl.style.opacity = '1';
   }
 
   await sleep(200);
   progressEl.classList.add('boot-progress--visible');
 
-  // Animated progress with percentage
   const progressText = document.createElement('div');
   progressText.style.cssText = 'font-size:11px;color:var(--text-secondary);margin-top:4px;text-align:right;font-family:var(--font-mono);';
   progressEl.parentNode.insertBefore(progressText, progressEl.nextSibling);

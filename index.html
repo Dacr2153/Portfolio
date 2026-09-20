@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/terminal-emulator.css">
   <link rel="stylesheet" href="css/effects.css">
+  <link rel="stylesheet" href="css/light.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -52,7 +53,19 @@
 <body>
   <a href="#terminal-body" class="skip-link">Saltar al contenido principal</a>
 
-  <div class="terminal" id="terminal">
+  <!-- Ambient glow orbs -->
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+  <div class="orb orb--3"></div>
+
+  <!-- Film grain overlay -->
+  <div class="grain"></div>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="terminal terminal--crt" id="terminal">
     <!-- TITLE BAR -->
     <div class="terminal__titlebar">
       <div class="terminal__dots">
@@ -62,6 +75,7 @@
       </div>
       <span class="terminal__title">portfolio — zsh — 80×24</span>
       <div class="terminal__titlebar-actions">
+        <span class="pulse-dot" title="Disponible para oportunidades"></span>
         <a href="simple.html" class="theme-toggle" title="Ver versión simple del portafolio" aria-label="Ver versión simple">📄</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">☀</button>
       </div>
@@ -660,7 +674,6 @@
 
   <script src="js/boot.js"></script>
   <script src="js/typewriter.js"></script>
-  <script src="js/terminal.js"></script>
   <script src="js/terminal-emulator.js"></script>
   <script src="js/projects.js"></script>
   <script src="js/modal.js"></script>

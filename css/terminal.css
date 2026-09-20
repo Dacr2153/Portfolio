@@ -9,8 +9,9 @@
   background: var(--bg-terminal);
   border: 1px solid var(--border-terminal);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-window);
+  box-shadow: var(--shadow-window), 0 0 60px rgba(136, 198, 160, 0.03);
   overflow: hidden;
+  z-index: 10;
 }
 
 /* === TITLE BAR === */
@@ -116,6 +117,18 @@
   right: 0;
   height: 2px;
   background: var(--term-green);
+  box-shadow: 0 0 8px rgba(136, 198, 160, 0.3);
+}
+
+/* Sliding indicator */
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--term-green);
+  box-shadow: 0 0 8px rgba(136, 198, 160, 0.4);
+  transition: left 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
 }
 
 .tab__icon {
@@ -144,11 +157,34 @@
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.015) 2px,
-    rgba(0, 0, 0, 0.015) 4px
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
   );
   pointer-events: none;
   z-index: 50;
+}
+
+/* Animated scanline bar */
+.terminal__body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(
+    180deg,
+    rgba(136, 198, 160, 0.03) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 50;
+  animation: scanlineMove 6s linear infinite;
+}
+
+@keyframes scanlineMove {
+  0% { transform: translateY(-60px); }
+  100% { transform: translateY(100vh); }
 }
 
 /* === STATUS BAR === */
@@ -180,10 +216,18 @@
   padding: var(--sp-5);
   min-height: 100%;
   flex-direction: column;
+  opacity: 0;
+  transform: translateY(8px);
 }
 
 .terminal-section--active {
   display: flex;
+  animation: sectionIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sectionIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* === PROMPT === */

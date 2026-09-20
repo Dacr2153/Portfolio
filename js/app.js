@@ -2,6 +2,22 @@ function initTabs() {
   const tabs = document.querySelectorAll('.tab');
   const sections = document.querySelectorAll('.terminal-section');
   const statusSection = document.getElementById('statusSection');
+  const tabbar = document.querySelector('.terminal__tabbar');
+
+  const indicator = document.createElement('div');
+  indicator.className = 'tab-indicator';
+  tabbar.style.position = 'relative';
+  tabbar.appendChild(indicator);
+
+  function moveIndicator(tab) {
+    const rect = tab.getBoundingClientRect();
+    const barRect = tabbar.getBoundingClientRect();
+    indicator.style.left = (rect.left - barRect.left + tabbar.scrollLeft) + 'px';
+    indicator.style.width = rect.width + 'px';
+  }
+
+  const activeTab = tabbar.querySelector('.tab--active');
+  if (activeTab) setTimeout(() => moveIndicator(activeTab), 100);
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -14,9 +30,17 @@ function initTabs() {
       tab.classList.add('tab--active');
       tab.setAttribute('aria-selected', 'true');
 
-      sections.forEach(s => s.classList.remove('terminal-section--active'));
+      moveIndicator(tab);
+
+      sections.forEach(s => {
+        s.classList.remove('terminal-section--active');
+        s.style.animation = 'none';
+      });
+
       const target = document.getElementById(targetId);
       if (target) {
+        void target.offsetWidth;
+        target.style.animation = '';
         target.classList.add('terminal-section--active');
         document.getElementById('terminal-body').scrollTop = 0;
       }
@@ -27,6 +51,11 @@ function initTabs() {
 
       triggerSectionAnimations(targetId);
     });
+  });
+
+  window.addEventListener('resize', () => {
+    const current = tabbar.querySelector('.tab--active');
+    if (current) moveIndicator(current);
   });
 }
 
@@ -108,6 +137,58 @@ function initScrollToTop() {
   }
 }
 
+function initCursor() {
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let mx = 0, my = 0, dx = 0, dy = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', function(e) {
+    mx = e.clientX;
+    my = e.clientY;
+  });
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  (function animCursor() {
+    dx = lerp(dx, mx, 0.15);
+    dy = lerp(dy, my, 0.15);
+    rx = lerp(rx, mx, 0.08);
+    ry = lerp(ry, my, 0.08);
+    dot.style.left = dx + 'px';
+    dot.style.top = dy + 'px';
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+  var hoverEls = document.querySelectorAll('a,button,.tab,.filter-btn,.project-entry,.contact-channel,.hero-ls__dir,.theme-toggle');
+  hoverEls.forEach(function(el) {
+    el.addEventListener('mouseenter', function() { dot.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', function() { dot.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+}
+
+function initMagneticDirs() {
+  if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  document.querySelectorAll('.hero-ls__dir').forEach(function(el) {
+    el.addEventListener('mousemove', function(e) {
+      var rect = el.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = 'translate(' + (x * 0.15) + 'px,' + (y * 0.15) + 'px)';
+    });
+    el.addEventListener('mouseleave', function() {
+      el.style.transform = 'translate(0,0)';
+      el.style.transition = 'transform 0.4s cubic-bezier(.16,1,.3,1)';
+    });
+    el.addEventListener('mouseenter', function() {
+      el.style.transition = 'none';
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initHeroDirs();
@@ -121,4 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTypewriter();
   initScrollProgress();
   initKeyboardShortcuts();
+  initCursor();
+  initMagneticDirs();
 });
