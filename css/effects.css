@@ -88,6 +88,20 @@
   90% { transform: translate(-10%, 10%); }
 }
 
+/* === MATRIX RAIN CANVAS (cyber theme only) === */
+.matrix-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.cyber .matrix-canvas {
+  opacity: 0.12;
+}
+
 /* === CUSTOM CURSOR === */
 .cursor-dot,
 .cursor-ring {
@@ -409,4 +423,5 @@
   .pulse-dot { animation: none; }
   .cursor-dot, .cursor-ring { display: none !important; }
   body, a, button, .tab, .filter-btn, .project-entry, .contact-channel, .hero-ls__dir { cursor: auto !important; }
+  .matrix-canvas { display: none !important; }
 }
