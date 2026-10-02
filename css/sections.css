@@ -1051,12 +1051,21 @@
 .web-banner {
   position: absolute;
   top: 4px;
-  left: calc(50% + 490px);
+  left: calc(50% + 500px);
   z-index: 200;
+  display: flex;
+  align-items: flex-start;
   opacity: 0;
   animation: bannerIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 2s both,
              bannerOut 0.5s ease 8s forwards;
   pointer-events: none;
+}
+
+.web-banner__arrow {
+  color: var(--term-green);
+  flex-shrink: 0;
+  margin-right: -8px;
+  margin-top: -2px;
 }
 
 .web-banner__sign {
@@ -1071,13 +1080,6 @@
   text-align: center;
   white-space: nowrap;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 20px rgba(136, 198, 160, 0.06);
-}
-
-.web-banner__arrow {
-  position: absolute;
-  top: -44px;
-  right: calc(100% + 4px);
-  color: var(--term-green);
 }
 
 @keyframes bannerIn {
