@@ -415,7 +415,6 @@ class PortfolioTerminal {
     this.printLine('  Canales de contacto:', 'highlight');
     this.printLine('');
     this.printHTML('  <span class="term-cyan">{ }</span>  GitHub      <span class="term-dim">→</span>  <span class="term-link">github.com/DaCr2153</span>');
-    this.printHTML('  <span class="term-blue">in</span>  LinkedIn    <span class="term-dim">→</span>  <span class="term-link">linkedin.com/in/TU-USUARIO</span>');
     this.printHTML('  <span class="term-green">@</span>   Correo      <span class="term-dim">→</span>  <span class="term-link">daacolorador@gmail.com</span>');
     this.printHTML('  <span class="term-green">🔒</span>   Correo Seg  <span class="term-dim">→</span>  <span class="term-link">DaCr2153@proton.me</span>');
     this.printLine('');
