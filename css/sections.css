@@ -1062,10 +1062,15 @@
 }
 
 .web-banner__arrow {
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 418px);
+  z-index: 300;
   color: var(--term-green);
-  flex-shrink: 0;
-  margin-right: -8px;
-  margin-top: -2px;
+  opacity: 0;
+  animation: bannerIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 2s both,
+             bannerOut 0.5s ease 8s forwards;
+  pointer-events: none;
 }
 
 .web-banner__sign {
