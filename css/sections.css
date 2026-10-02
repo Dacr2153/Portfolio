@@ -1051,7 +1051,7 @@
 .web-banner {
   position: absolute;
   top: 4px;
-  left: calc(50% + 500px);
+  left: calc(50% + 425px);
   z-index: 200;
   display: flex;
   align-items: flex-start;
@@ -1061,20 +1061,28 @@
   pointer-events: none;
 }
 
-.web-banner__arrow {
+.web-banner__line {
+  position: relative;
+  width: 70px;
+  height: 3px;
+  background: var(--term-green);
+  margin-top: 18px;
+  flex-shrink: 0;
+}
+
+.web-banner__line::before {
+  content: '';
   position: absolute;
-  top: 14px;
-  left: calc(50% + 418px);
-  z-index: 300;
-  color: var(--term-green);
-  opacity: 0;
-  animation: bannerIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 2s both,
-             bannerOut 0.5s ease 8s forwards;
-  pointer-events: none;
+  top: 3px;
+  left: -4px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 12px solid var(--term-green);
 }
 
 .web-banner__sign {
-  position: relative;
   background: var(--bg-terminal);
   border: 2px solid var(--term-green);
   border-radius: var(--radius-md);
